@@ -176,12 +176,12 @@ const CodePlayground = () => {
           </div>
 
           {/* Tabs */}
-          <div className="flex border-b border-border bg-secondary/30">
+          <div className="flex overflow-x-auto border-b border-border bg-secondary/30 scrollbar-none">
             {SNIPPETS.map((snippet, i) => (
               <button
                 key={snippet.title}
                 onClick={() => setActiveTab(i)}
-                className={`flex items-center gap-1.5 px-4 py-2.5 text-xs font-medium transition-all border-b-2 ${
+                className={`flex items-center gap-1.5 px-3 sm:px-4 py-2.5 text-[11px] sm:text-xs font-medium transition-all border-b-2 whitespace-nowrap ${
                   i === activeTab
                     ? "border-primary text-foreground bg-background/50"
                     : "border-transparent text-muted-foreground hover:text-foreground hover:bg-secondary/50"
