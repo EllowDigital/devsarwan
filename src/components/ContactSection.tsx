@@ -122,9 +122,9 @@ const ContactSection = () => {
               <p className="text-sm font-bold">Find me on</p>
               <div className="flex gap-3">
                 {[
-                  { icon: Github, href: "#", label: "GitHub" },
-                  { icon: Linkedin, href: "#", label: "LinkedIn" },
-                  { icon: Twitter, href: "#", label: "Twitter" },
+                  { icon: Github, href: "https://github.com/devsarwan", label: "GitHub" },
+                  { icon: Linkedin, href: "https://linkedin.com/in/sarwan", label: "LinkedIn" },
+                  { icon: Twitter, href: "https://twitter.com/sarwan", label: "Twitter" },
                 ].map(({ icon: Icon, href, label }) => (
                   <a
                     key={label}

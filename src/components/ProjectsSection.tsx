@@ -15,7 +15,7 @@ const projects = [
     longDescription: "EllowDigital is the flagship product — a platform built from the ground up to deliver cutting-edge software solutions. It features a modern dashboard, project management tools, and seamless client collaboration.",
     tech: ["React", "Node.js", "PostgreSQL", "TailwindCSS"],
     category: "Full Stack",
-    github: "#",
+    github: "https://github.com/EllowDigital",
     live: "#",
     color: "from-primary/20 to-accent/20",
   },

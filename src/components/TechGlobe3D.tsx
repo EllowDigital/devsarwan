@@ -1,6 +1,6 @@
 import { useRef, useMemo, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Text, Float } from "@react-three/drei";
+import { Text, Float, OrbitControls } from "@react-three/drei";
 import { motion } from "framer-motion";
 import * as THREE from "three";
 
@@ -178,6 +178,14 @@ const TechGlobe3D = () => {
               gl={{ alpha: true, antialias: true }}
             >
               <Scene />
+              <OrbitControls
+                enableZoom={false}
+                enablePan={false}
+                autoRotate
+                autoRotateSpeed={0.5}
+                maxPolarAngle={Math.PI / 1.5}
+                minPolarAngle={Math.PI / 4}
+              />
             </Canvas>
           </Suspense>
         </motion.div>

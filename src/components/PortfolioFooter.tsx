@@ -10,9 +10,9 @@ const links = [
 ];
 
 const socials = [
-  { icon: Github, href: "#", label: "GitHub" },
-  { icon: Linkedin, href: "#", label: "LinkedIn" },
-  { icon: Twitter, href: "#", label: "Twitter" },
+  { icon: Github, href: "https://github.com/devsarwan", label: "GitHub" },
+  { icon: Linkedin, href: "https://linkedin.com/in/sarwan", label: "LinkedIn" },
+  { icon: Twitter, href: "https://twitter.com/sarwan", label: "Twitter" },
 ];
 
 const PortfolioFooter = () => {
