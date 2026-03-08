@@ -26,16 +26,17 @@ const Index = () => {
     sections.forEach((section) => {
       gsap.fromTo(
         section,
-        { opacity: 0.3 },
+        { opacity: 0.15, y: 30 },
         {
           opacity: 1,
-          duration: 0.5,
-          ease: "none",
+          y: 0,
+          duration: 0.8,
+          ease: "power2.out",
           scrollTrigger: {
             trigger: section,
-            start: "top 90%",
-            end: "top 40%",
-            scrub: 0.5,
+            start: "top 85%",
+            end: "top 30%",
+            scrub: 0.3,
           },
         }
       );
