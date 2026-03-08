@@ -1,8 +1,10 @@
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
-import {
-  Monitor, Server, Database, Wrench, Layers,
-} from "lucide-react";
+import { useEffect, useRef } from "react";
+import { motion } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Monitor, Server, Database, Wrench, Layers } from "lucide-react";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const categories = [
   {
@@ -58,23 +60,38 @@ const categories = [
   },
 ];
 
-const SkillBar = ({ name, level, delay }: { name: string; level: number; delay: number }) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
+const SkillBar = ({ name, level }: { name: string; level: number }) => {
+  const barRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!barRef.current) return;
+    gsap.fromTo(
+      barRef.current,
+      { scaleX: 0 },
+      {
+        scaleX: 1,
+        duration: 1.2,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: barRef.current,
+          start: "top 90%",
+        },
+      }
+    );
+  }, []);
 
   return (
-    <div ref={ref} className="space-y-1.5">
+    <div className="space-y-1.5">
       <div className="flex justify-between text-xs">
         <span className="font-medium">{name}</span>
         <span className="text-muted-foreground">{level}%</span>
       </div>
       <div className="h-1.5 rounded-full bg-secondary overflow-hidden">
-        <motion.div
-          initial={{ width: 0 }}
-          animate={isInView ? { width: `${level}%` } : {}}
-          transition={{ duration: 1, delay, ease: "easeOut" }}
-          className="h-full rounded-full"
+        <div
+          ref={barRef}
+          className="h-full rounded-full origin-left"
           style={{
+            width: `${level}%`,
             background: `linear-gradient(90deg, hsl(var(--gradient-start)), hsl(var(--gradient-end)))`,
           }}
         />
@@ -84,51 +101,71 @@ const SkillBar = ({ name, level, delay }: { name: string; level: number; delay: 
 };
 
 const SkillsSection = () => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (!sectionRef.current) return;
+    const cards = sectionRef.current.querySelectorAll(".skill-card");
+    cards.forEach((card, i) => {
+      gsap.fromTo(
+        card,
+        { opacity: 0, y: 60, rotateY: 10 },
+        {
+          opacity: 1,
+          y: 0,
+          rotateY: 0,
+          duration: 0.7,
+          delay: i * 0.08,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: card,
+            start: "top 88%",
+          },
+        }
+      );
+    });
+    return () => ScrollTrigger.getAll().forEach((t) => t.kill());
+  }, []);
 
   return (
-    <section id="skills" className="section-padding relative">
+    <section id="skills" className="section-padding relative" ref={sectionRef}>
       <div className="absolute bottom-0 left-0 w-80 h-80 bg-accent/5 rounded-full blur-[120px]" />
 
       <div className="max-w-6xl mx-auto relative">
         <motion.div
-          ref={ref}
           initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.6 }}
           className="mb-16 text-center"
         >
           <p className="text-sm font-mono text-primary tracking-widest uppercase mb-3">Skills</p>
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight">
             Technologies I <span className="gradient-text">work with.</span>
           </h2>
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {categories.map((cat, catIdx) => {
+          {categories.map((cat) => {
             const Icon = cat.icon;
             return (
-              <motion.div
+              <div
                 key={cat.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: catIdx * 0.1 }}
-                className="glass rounded-2xl p-6 hover-lift"
+                className="skill-card glass rounded-2xl p-6 hover-lift"
+                style={{ perspective: "800px" }}
               >
                 <div className="flex items-center gap-3 mb-5">
                   <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
                     <Icon size={18} className="text-primary" />
                   </div>
-                  <h3 className="font-semibold">{cat.title}</h3>
+                  <h3 className="font-bold">{cat.title}</h3>
                 </div>
                 <div className="space-y-4">
-                  {cat.skills.map((skill, si) => (
-                    <SkillBar key={skill.name} {...skill} delay={catIdx * 0.1 + si * 0.08} />
+                  {cat.skills.map((skill) => (
+                    <SkillBar key={skill.name} {...skill} />
                   ))}
                 </div>
-              </motion.div>
+              </div>
             );
           })}
         </div>
