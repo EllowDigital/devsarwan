@@ -269,7 +269,7 @@ const GitHubActivitySection = () => {
           </div>
 
           <div className="overflow-x-auto pb-2">
-            <div className="flex gap-[3px] min-w-[700px]">
+            <div className="flex gap-[3px] min-w-[600px] sm:min-w-[700px]">
               {weeks.map((week, wi) => (
                 <div key={wi} className="flex flex-col gap-[3px]">
                   {week.map((level, di) => (
