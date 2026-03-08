@@ -1,3 +1,4 @@
+import { useState, useCallback } from "react";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
@@ -14,27 +15,41 @@ import JourneySection from "@/components/JourneySection";
 import ContactSection from "@/components/ContactSection";
 import PortfolioFooter from "@/components/PortfolioFooter";
 import CursorGlow from "@/components/CursorGlow";
+import ScrollProgress from "@/components/ScrollProgress";
+import SplashScreen from "@/components/SplashScreen";
+import CodePlayground from "@/components/CodePlayground";
 
 const Index = () => {
+  const [showSplash, setShowSplash] = useState(true);
+
+  const handleSplashComplete = useCallback(() => {
+    setShowSplash(false);
+  }, []);
+
   return (
-    <div className="min-h-screen bg-background text-foreground overflow-x-hidden noise-overlay">
-      <CursorGlow />
-      <Navbar />
-      <HeroSection />
-      <AboutSection />
-      <StatsSection />
-      <SkillsSection />
-      <TechGlobe3D />
-      <TerminalSection />
-      <ProjectsSection />
-      <ProjectShowcase3D />
-      <GitHubActivitySection />
-      <TestimonialsSection />
-      <EllowDigitalSection />
-      <JourneySection />
-      <ContactSection />
-      <PortfolioFooter />
-    </div>
+    <>
+      {showSplash && <SplashScreen onComplete={handleSplashComplete} />}
+      <div className={`min-h-screen bg-background text-foreground overflow-x-hidden noise-overlay ${showSplash ? "opacity-0" : "animate-fade-in"}`}>
+        <ScrollProgress />
+        <CursorGlow />
+        <Navbar />
+        <HeroSection />
+        <AboutSection />
+        <StatsSection />
+        <SkillsSection />
+        <TechGlobe3D />
+        <CodePlayground />
+        <TerminalSection />
+        <ProjectsSection />
+        <ProjectShowcase3D />
+        <GitHubActivitySection />
+        <TestimonialsSection />
+        <EllowDigitalSection />
+        <JourneySection />
+        <ContactSection />
+        <PortfolioFooter />
+      </div>
+    </>
   );
 };
 
