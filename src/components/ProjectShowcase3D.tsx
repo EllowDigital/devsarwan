@@ -7,7 +7,7 @@ const projects = [
     title: "EllowDigital Platform",
     description: "A comprehensive digital solutions platform offering modern software development services.",
     tech: ["React", "Node.js", "PostgreSQL", "TailwindCSS"],
-    github: "#",
+    github: "https://github.com/EllowDigital",
     live: "#",
     gradient: "from-primary/30 via-accent/20 to-primary/10",
   },
