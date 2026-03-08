@@ -44,7 +44,7 @@ Website    │ ellowdigital.com
   contact: `📬 Get in Touch
 ─────────────────────────────────
 Email      │ hello@sarwan.dev
-GitHub     │ github.com/sarwan
+GitHub     │ github.com/devsarwan
 LinkedIn   │ linkedin.com/in/sarwan
 Twitter    │ twitter.com/sarwan
 
