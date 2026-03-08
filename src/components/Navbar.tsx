@@ -7,6 +7,7 @@ const navItems = [
   { label: "About", href: "#about" },
   { label: "Skills", href: "#skills" },
   { label: "Projects", href: "#projects" },
+  { label: "Blog", href: "#blog" },
   { label: "EllowDigital", href: "#ellowdigital" },
   { label: "Journey", href: "#journey" },
   { label: "Contact", href: "#contact" },
@@ -36,13 +37,13 @@ const Navbar = () => {
         scrolled ? "glass-strong shadow-lg" : ""
       }`}
     >
-      <div className="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between">
-        <a href="#home" className="text-xl font-bold gradient-text tracking-tight">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
+        <a href="#home" className="text-lg sm:text-xl font-bold gradient-text tracking-tight">
           Sarwan<span className="text-muted-foreground font-light">.dev</span>
         </a>
 
         {/* Desktop nav */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden lg:flex items-center gap-6 xl:gap-8">
           {navItems.map((item) => (
             <a
               key={item.href}
@@ -74,7 +75,7 @@ const Navbar = () => {
         </div>
 
         {/* Mobile toggle */}
-        <div className="flex md:hidden items-center gap-3">
+        <div className="flex lg:hidden items-center gap-3">
           <button
             onClick={() => setDark(!dark)}
             className="relative p-2 rounded-lg glass overflow-hidden"
@@ -106,7 +107,7 @@ const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden glass-strong border-t border-border"
+            className="lg:hidden glass-strong border-t border-border"
           >
             <div className="px-6 py-4 flex flex-col gap-4">
               {navItems.map((item) => (

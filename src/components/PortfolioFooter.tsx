@@ -27,7 +27,7 @@ const PortfolioFooter = () => {
           </p>
         </div>
 
-        <nav className="flex gap-6">
+        <nav className="flex flex-wrap justify-center gap-4 sm:gap-6">
           {links.map((l) => (
             <a key={l.href} href={l.href} className="text-xs text-muted-foreground hover:text-foreground transition-colors">
               {l.label}
