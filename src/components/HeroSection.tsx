@@ -1,5 +1,5 @@
 import { useEffect, useRef, useCallback } from "react";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowDown, ExternalLink, Mail, FileDown } from "lucide-react";
 import gsap from "gsap";
 
@@ -7,6 +7,16 @@ const HeroSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
   const particlesRef = useRef<HTMLCanvasElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+
+  const heroY = useTransform(scrollYProgress, [0, 1], [0, 150]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+  const orbY1 = useTransform(scrollYProgress, [0, 1], [0, -100]);
+  const orbY2 = useTransform(scrollYProgress, [0, 1], [0, 80]);
 
   // Particle background
   useEffect(() => {
@@ -52,7 +62,6 @@ const HeroSection = () => {
         ctx.fill();
       });
 
-      // Draw connections
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
@@ -79,7 +88,7 @@ const HeroSection = () => {
     };
   }, []);
 
-  // GSAP entrance
+  // GSAP character entrance
   useEffect(() => {
     if (!headlineRef.current) return;
     const chars = headlineRef.current.querySelectorAll(".hero-char");
@@ -112,16 +121,21 @@ const HeroSection = () => {
       ref={sectionRef}
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Particle canvas */}
       <canvas ref={particlesRef} className="absolute inset-0 z-0" />
 
-      {/* Gradient orbs */}
-      <div className="absolute inset-0 z-[1]">
-        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full bg-primary/8 blur-[150px] animate-float" />
-        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full bg-accent/8 blur-[140px] animate-float-delayed" />
+      {/* Parallax gradient orbs */}
+      <div className="absolute inset-0 z-[1] pointer-events-none">
+        <motion.div
+          style={{ y: orbY1 }}
+          className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full bg-primary/8 blur-[150px] animate-float"
+        />
+        <motion.div
+          style={{ y: orbY2 }}
+          className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full bg-accent/8 blur-[140px] animate-float-delayed"
+        />
       </div>
 
-      {/* Floating code fragments */}
+      {/* Floating code fragments with parallax */}
       {[
         { text: "const build = () => { }", top: "18%", left: "6%", delay: 0.5 },
         { text: "<FullStack />", top: "28%", right: "8%", delay: 0.8 },
@@ -149,8 +163,8 @@ const HeroSection = () => {
         </motion.div>
       ))}
 
-      {/* Content */}
-      <div className="relative z-10 text-center px-6 max-w-5xl">
+      {/* Content with parallax fade */}
+      <motion.div style={{ y: heroY, opacity: heroOpacity }} className="relative z-10 text-center px-6 max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -216,14 +230,14 @@ const HeroSection = () => {
             <FileDown size={16} className="group-hover:translate-y-0.5 transition-transform" /> Download Resume
           </a>
         </motion.div>
-      </div>
+      </motion.div>
 
       {/* Scroll indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.8, duration: 0.8 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
       >
         <motion.div
           animate={{ y: [0, 10, 0] }}

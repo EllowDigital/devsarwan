@@ -4,6 +4,7 @@ import { Send, Github, Linkedin, Twitter, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import ParallaxOrb from "./ParallaxOrb";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -43,7 +44,8 @@ const ContactSection = () => {
 
   return (
     <section id="contact" className="section-padding relative" ref={sectionRef}>
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-[140px]" />
+      <ParallaxOrb color="primary" size="lg" speed={-0.3} position={{ bottom: "0%", right: "0%" }} />
+      <ParallaxOrb color="accent" size="sm" speed={0.35} position={{ top: "20%", left: "10%" }} />
 
       <div className="max-w-4xl mx-auto relative">
         <motion.div
@@ -63,8 +65,8 @@ const ContactSection = () => {
         <div className="grid md:grid-cols-2 gap-10">
           <form onSubmit={handleSubmit} className="contact-form glass rounded-2xl p-8 space-y-5">
             {[
-              { key: "name", label: "Name", type: "text", placeholder: "Your name" },
-              { key: "email", label: "Email", type: "email", placeholder: "your@email.com" },
+              { key: "name", label: "Name", type: "text" },
+              { key: "email", label: "Email", type: "email" },
             ].map((field) => (
               <div key={field.key} className="relative">
                 <label className={`absolute left-4 transition-all duration-300 pointer-events-none ${
@@ -130,6 +132,8 @@ const ContactSection = () => {
                     key={label}
                     href={href}
                     aria-label={label}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="group w-12 h-12 rounded-xl glass gradient-border flex items-center justify-center text-muted-foreground hover:text-primary transition-all hover:scale-110 active:scale-95"
                   >
                     <Icon size={18} />

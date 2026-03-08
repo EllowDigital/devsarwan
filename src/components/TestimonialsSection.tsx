@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Quote, ChevronLeft, ChevronRight } from "lucide-react";
+import ParallaxOrb from "./ParallaxOrb";
 
 const testimonials = [
   {
@@ -50,7 +51,6 @@ const TestimonialsSection = () => {
     setCurrent((c) => (c - 1 + testimonials.length) % testimonials.length);
   }, []);
 
-  // Auto-slide
   useEffect(() => {
     timerRef.current = setInterval(next, 5000);
     return () => { if (timerRef.current) clearInterval(timerRef.current); };
@@ -69,7 +69,8 @@ const TestimonialsSection = () => {
 
   return (
     <section className="section-padding relative overflow-hidden">
-      <div className="absolute top-1/2 left-0 w-[400px] h-[400px] bg-accent/5 rounded-full blur-[160px]" />
+      <ParallaxOrb color="accent" size="xl" speed={-0.2} position={{ top: "30%", left: "-5%" }} />
+      <ParallaxOrb color="primary" size="md" speed={0.3} position={{ bottom: "0%", right: "10%" }} />
 
       <div className="max-w-4xl mx-auto relative">
         <motion.div
@@ -116,7 +117,6 @@ const TestimonialsSection = () => {
           </AnimatePresence>
         </div>
 
-        {/* Controls */}
         <div className="flex items-center justify-center gap-4 mt-8">
           <button
             onClick={() => { prev(); resetTimer(); }}

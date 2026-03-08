@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { FolderGit2, Code2, Cpu, Sparkles } from "lucide-react";
+import ParallaxOrb from "./ParallaxOrb";
 
 const stats = [
   { icon: FolderGit2, value: 25, suffix: "+", label: "Projects Completed" },
@@ -14,7 +15,6 @@ const AnimatedCounter = ({ target, suffix, inView }: { target: number; suffix: s
 
   useEffect(() => {
     if (!inView || !ref.current) return;
-    let start = 0;
     const duration = 2000;
     const startTime = performance.now();
 
@@ -22,8 +22,8 @@ const AnimatedCounter = ({ target, suffix, inView }: { target: number; suffix: s
       const elapsed = now - startTime;
       const progress = Math.min(elapsed / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
-      start = Math.round(eased * target);
-      if (ref.current) ref.current.textContent = `${start}${suffix}`;
+      const val = Math.round(eased * target);
+      if (ref.current) ref.current.textContent = `${val}${suffix}`;
       if (progress < 1) requestAnimationFrame(tick);
     };
 
@@ -39,7 +39,10 @@ const StatsSection = () => {
 
   return (
     <section className="section-padding relative" ref={ref}>
-      <div className="max-w-5xl mx-auto">
+      <ParallaxOrb color="primary" size="md" speed={-0.2} position={{ top: "20%", left: "5%" }} />
+      <ParallaxOrb color="accent" size="sm" speed={0.3} position={{ bottom: "20%", right: "10%" }} />
+
+      <div className="max-w-5xl mx-auto relative">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {stats.map((stat, i) => {
             const Icon = stat.icon;
