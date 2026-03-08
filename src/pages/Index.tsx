@@ -8,6 +8,8 @@ import StatsSection from "@/components/StatsSection";
 import SkillsSection from "@/components/SkillsSection";
 import TerminalSection from "@/components/TerminalSection";
 import ProjectsSection from "@/components/ProjectsSection";
+import ProjectShowcase3D from "@/components/ProjectShowcase3D";
+import GitHubActivitySection from "@/components/GitHubActivitySection";
 import EllowDigitalSection from "@/components/EllowDigitalSection";
 import JourneySection from "@/components/JourneySection";
 import ContactSection from "@/components/ContactSection";
