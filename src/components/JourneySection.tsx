@@ -1,5 +1,10 @@
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Code2, BookOpen, Rocket, Building2 } from "lucide-react";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const milestones = [
   {
@@ -29,8 +34,67 @@ const milestones = [
 ];
 
 const JourneySection = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const lineRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!sectionRef.current) return;
+
+    // Animate the timeline line growing
+    if (lineRef.current) {
+      gsap.fromTo(
+        lineRef.current,
+        { scaleY: 0 },
+        {
+          scaleY: 1,
+          duration: 1.5,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: lineRef.current,
+            start: "top 80%",
+            end: "bottom 50%",
+            scrub: 1,
+          },
+        }
+      );
+    }
+
+    const nodes = sectionRef.current.querySelectorAll(".journey-node");
+    nodes.forEach((node, i) => {
+      gsap.fromTo(
+        node,
+        { opacity: 0, scale: 0.5, y: 30 },
+        {
+          opacity: 1,
+          scale: 1,
+          y: 0,
+          duration: 0.6,
+          ease: "back.out(1.7)",
+          scrollTrigger: { trigger: node, start: "top 85%" },
+        }
+      );
+    });
+
+    const cards = sectionRef.current.querySelectorAll(".journey-card");
+    cards.forEach((card, i) => {
+      gsap.fromTo(
+        card,
+        { opacity: 0, x: i % 2 === 0 ? -50 : 50 },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: { trigger: card, start: "top 85%" },
+        }
+      );
+    });
+
+    return () => ScrollTrigger.getAll().forEach((t) => t.kill());
+  }, []);
+
   return (
-    <section id="journey" className="section-padding relative">
+    <section id="journey" className="section-padding relative" ref={sectionRef}>
       <div className="absolute top-0 left-0 w-80 h-80 bg-accent/5 rounded-full blur-[120px]" />
 
       <div className="max-w-4xl mx-auto relative">
@@ -41,44 +105,45 @@ const JourneySection = () => {
           className="mb-16 text-center"
         >
           <p className="text-sm font-mono text-primary tracking-widest uppercase mb-3">Journey</p>
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight">
             The path <span className="gradient-text">so far.</span>
           </h2>
         </motion.div>
 
         <div className="relative">
           {/* Timeline line */}
-          <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-border md:-translate-x-px" />
+          <div
+            ref={lineRef}
+            className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px origin-top md:-translate-x-px"
+            style={{
+              background: "linear-gradient(to bottom, hsl(var(--gradient-start)), hsl(var(--gradient-end)))",
+            }}
+          />
 
           {milestones.map((m, i) => {
             const Icon = m.icon;
             const isLeft = i % 2 === 0;
             return (
-              <motion.div
+              <div
                 key={m.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.15 }}
-                className={`relative flex items-start gap-6 mb-12 md:mb-16 ${
+                className={`relative flex items-start gap-6 mb-14 md:mb-20 ${
                   isLeft ? "md:flex-row" : "md:flex-row-reverse"
                 }`}
               >
-                {/* Content */}
-                <div className={`ml-16 md:ml-0 md:w-[calc(50%-2rem)] ${isLeft ? "md:text-right" : ""}`}>
-                  <span className="text-xs font-mono text-primary">{m.year}</span>
-                  <h3 className="text-lg font-semibold mt-1 mb-2">{m.title}</h3>
+                {/* Content card */}
+                <div className={`journey-card ml-16 md:ml-0 md:w-[calc(50%-2.5rem)] glass rounded-2xl p-6 hover-lift ${isLeft ? "md:text-right" : ""}`}>
+                  <span className="text-xs font-mono text-primary font-bold">{m.year}</span>
+                  <h3 className="text-lg font-bold mt-1 mb-2">{m.title}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">{m.description}</p>
                 </div>
 
                 {/* Icon node */}
-                <div className="absolute left-0 md:left-1/2 md:-translate-x-1/2 w-12 h-12 rounded-full glass gradient-border flex items-center justify-center z-10 bg-background">
+                <div className="journey-node absolute left-0 md:left-1/2 md:-translate-x-1/2 w-12 h-12 rounded-full gradient-border flex items-center justify-center z-10 bg-background glow-primary">
                   <Icon size={18} className="text-primary" />
                 </div>
 
-                {/* Spacer for opposite side */}
-                <div className="hidden md:block md:w-[calc(50%-2rem)]" />
-              </motion.div>
+                <div className="hidden md:block md:w-[calc(50%-2.5rem)]" />
+              </div>
             );
           })}
         </div>
