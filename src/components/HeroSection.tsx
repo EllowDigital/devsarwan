@@ -180,7 +180,7 @@ const HeroSection = () => {
 
         <h1
           ref={headlineRef}
-          className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-black tracking-tight leading-[0.92] overflow-hidden text-glow"
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.5rem] font-black tracking-tight leading-[0.92] overflow-hidden text-glow"
         >
           <span className="gradient-text block">{splitText("Sarwan")}</span>
           <span className="text-foreground block mt-2">{splitText("Full Stack")}</span>
