@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Code2, BookOpen, Rocket, Building2 } from "lucide-react";
+import ParallaxOrb from "./ParallaxOrb";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -40,7 +41,6 @@ const JourneySection = () => {
   useEffect(() => {
     if (!sectionRef.current) return;
 
-    // Animate the timeline line growing
     if (lineRef.current) {
       gsap.fromTo(
         lineRef.current,
@@ -60,7 +60,7 @@ const JourneySection = () => {
     }
 
     const nodes = sectionRef.current.querySelectorAll(".journey-node");
-    nodes.forEach((node, i) => {
+    nodes.forEach((node) => {
       gsap.fromTo(
         node,
         { opacity: 0, scale: 0.5, y: 30 },
@@ -95,7 +95,8 @@ const JourneySection = () => {
 
   return (
     <section id="journey" className="section-padding relative" ref={sectionRef}>
-      <div className="absolute top-0 left-0 w-80 h-80 bg-accent/5 rounded-full blur-[120px]" />
+      <ParallaxOrb color="accent" size="lg" speed={-0.35} position={{ top: "0%", left: "0%" }} />
+      <ParallaxOrb color="primary" size="md" speed={0.25} position={{ bottom: "10%", right: "5%" }} />
 
       <div className="max-w-4xl mx-auto relative">
         <motion.div
@@ -111,7 +112,6 @@ const JourneySection = () => {
         </motion.div>
 
         <div className="relative">
-          {/* Timeline line */}
           <div
             ref={lineRef}
             className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px origin-top md:-translate-x-px"
@@ -130,14 +130,12 @@ const JourneySection = () => {
                   isLeft ? "md:flex-row" : "md:flex-row-reverse"
                 }`}
               >
-                {/* Content card */}
                 <div className={`journey-card ml-16 md:ml-0 md:w-[calc(50%-2.5rem)] glass rounded-2xl p-6 hover-lift ${isLeft ? "md:text-right" : ""}`}>
                   <span className="text-xs font-mono text-primary font-bold">{m.year}</span>
                   <h3 className="text-lg font-bold mt-1 mb-2">{m.title}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">{m.description}</p>
                 </div>
 
-                {/* Icon node */}
                 <div className="journey-node absolute left-0 md:left-1/2 md:-translate-x-1/2 w-12 h-12 rounded-full gradient-border flex items-center justify-center z-10 bg-background glow-primary">
                   <Icon size={18} className="text-primary" />
                 </div>

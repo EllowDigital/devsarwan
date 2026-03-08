@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Monitor, Server, Database, Wrench, Layers } from "lucide-react";
+import ParallaxOrb from "./ParallaxOrb";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -72,10 +73,7 @@ const SkillBar = ({ name, level }: { name: string; level: number }) => {
         scaleX: 1,
         duration: 1.2,
         ease: "power3.out",
-        scrollTrigger: {
-          trigger: barRef.current,
-          start: "top 90%",
-        },
+        scrollTrigger: { trigger: barRef.current, start: "top 90%" },
       }
     );
   }, []);
@@ -117,10 +115,7 @@ const SkillsSection = () => {
           duration: 0.7,
           delay: i * 0.08,
           ease: "power3.out",
-          scrollTrigger: {
-            trigger: card,
-            start: "top 88%",
-          },
+          scrollTrigger: { trigger: card, start: "top 88%" },
         }
       );
     });
@@ -129,7 +124,8 @@ const SkillsSection = () => {
 
   return (
     <section id="skills" className="section-padding relative" ref={sectionRef}>
-      <div className="absolute bottom-0 left-0 w-80 h-80 bg-accent/5 rounded-full blur-[120px]" />
+      <ParallaxOrb color="accent" size="lg" speed={-0.25} position={{ bottom: "0%", left: "0%" }} />
+      <ParallaxOrb color="primary" size="sm" speed={0.4} position={{ top: "10%", right: "10%" }} />
 
       <div className="max-w-6xl mx-auto relative">
         <motion.div

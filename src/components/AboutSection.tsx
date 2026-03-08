@@ -1,8 +1,9 @@
 import { useEffect, useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Code2, Lightbulb, Rocket, Heart } from "lucide-react";
+import ParallaxOrb from "./ParallaxOrb";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -54,7 +55,6 @@ const AboutSection = () => {
           scrollTrigger: {
             trigger: card,
             start: "top 85%",
-            end: "top 50%",
             toggleActions: "play none none none",
           },
         }
@@ -70,22 +70,18 @@ const AboutSection = () => {
           y: 0,
           duration: 1,
           ease: "power3.out",
-          scrollTrigger: {
-            trigger: headingRef.current,
-            start: "top 85%",
-          },
+          scrollTrigger: { trigger: headingRef.current, start: "top 85%" },
         }
       );
     }
 
-    return () => {
-      ScrollTrigger.getAll().forEach((t) => t.kill());
-    };
+    return () => ScrollTrigger.getAll().forEach((t) => t.kill());
   }, []);
 
   return (
     <section id="about" className="section-padding relative" ref={sectionRef}>
-      <div className="absolute top-0 right-0 w-72 h-72 bg-primary/5 rounded-full blur-[100px]" />
+      <ParallaxOrb color="primary" size="md" speed={-0.4} position={{ top: "0%", right: "0%" }} />
+      <ParallaxOrb color="accent" size="sm" speed={0.3} position={{ bottom: "10%", left: "5%" }} />
 
       <div className="max-w-4xl mx-auto relative">
         <div ref={headingRef} className="mb-16">
