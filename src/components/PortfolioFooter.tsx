@@ -1,4 +1,5 @@
 import { Github, Linkedin, Twitter, Heart } from "lucide-react";
+import MatrixRain from "./MatrixRain";
 
 const links = [
   { label: "Home", href: "#home" },
@@ -16,8 +17,9 @@ const socials = [
 
 const PortfolioFooter = () => {
   return (
-    <footer className="border-t border-border px-6 py-12">
-      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+    <footer className="border-t border-border px-6 py-12 relative overflow-hidden">
+      <MatrixRain />
+      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
         <div className="text-center md:text-left">
           <p className="font-bold gradient-text text-lg">Sarwan.dev</p>
           <p className="text-xs text-muted-foreground mt-1">
@@ -41,7 +43,7 @@ const PortfolioFooter = () => {
           ))}
         </div>
       </div>
-      <div className="text-center mt-8 text-xs text-muted-foreground">
+      <div className="text-center mt-8 text-xs text-muted-foreground relative z-10">
         © {new Date().getFullYear()} Sarwan. All rights reserved.
       </div>
     </footer>

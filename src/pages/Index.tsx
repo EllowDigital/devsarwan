@@ -9,7 +9,9 @@ import SkillsSection from "@/components/SkillsSection";
 import TerminalSection from "@/components/TerminalSection";
 import ProjectsSection from "@/components/ProjectsSection";
 import ProjectShowcase3D from "@/components/ProjectShowcase3D";
+import TechGlobe3D from "@/components/TechGlobe3D";
 import GitHubActivitySection from "@/components/GitHubActivitySection";
+import TestimonialsSection from "@/components/TestimonialsSection";
 import EllowDigitalSection from "@/components/EllowDigitalSection";
 import JourneySection from "@/components/JourneySection";
 import ContactSection from "@/components/ContactSection";
@@ -20,7 +22,6 @@ gsap.registerPlugin(ScrollTrigger);
 
 const Index = () => {
   useEffect(() => {
-    // Cinematic section reveal — each section fades in with a subtle parallax
     const sections = document.querySelectorAll("section");
     sections.forEach((section) => {
       gsap.fromTo(
@@ -51,10 +52,12 @@ const Index = () => {
       <AboutSection />
       <StatsSection />
       <SkillsSection />
+      <TechGlobe3D />
       <TerminalSection />
       <ProjectsSection />
       <ProjectShowcase3D />
       <GitHubActivitySection />
+      <TestimonialsSection />
       <EllowDigitalSection />
       <JourneySection />
       <ContactSection />
