@@ -149,7 +149,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: item.delay, duration: 1.2 }}
-          className={`absolute glass rounded-lg px-3 py-2 font-mono text-xs text-muted-foreground select-none pointer-events-none hidden lg:block ${
+          className={`absolute glass rounded-lg px-3 py-2 font-mono text-xs text-muted-foreground select-none pointer-events-none hidden xl:block ${
             i % 2 === 0 ? "animate-float" : "animate-float-delayed"
           }`}
           style={{
@@ -180,7 +180,7 @@ const HeroSection = () => {
 
         <h1
           ref={headlineRef}
-          className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-black tracking-tight leading-[0.92] overflow-hidden text-glow"
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.5rem] font-black tracking-tight leading-[0.92] overflow-hidden text-glow"
         >
           <span className="gradient-text block">{splitText("Sarwan")}</span>
           <span className="text-foreground block mt-2">{splitText("Full Stack")}</span>
@@ -209,7 +209,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.2 }}
-          className="mt-12 flex flex-wrap gap-4 justify-center"
+          className="mt-8 sm:mt-12 flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 justify-center items-center"
         >
           <a
             href="#projects"

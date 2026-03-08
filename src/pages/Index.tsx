@@ -18,6 +18,7 @@ import CursorGlow from "@/components/CursorGlow";
 import ScrollProgress from "@/components/ScrollProgress";
 import SplashScreen from "@/components/SplashScreen";
 import CodePlayground from "@/components/CodePlayground";
+import BlogSection from "@/components/BlogSection";
 
 const Index = () => {
   const [showSplash, setShowSplash] = useState(true);
@@ -42,6 +43,7 @@ const Index = () => {
         <TerminalSection />
         <ProjectsSection />
         <ProjectShowcase3D />
+        <BlogSection />
         <GitHubActivitySection />
         <TestimonialsSection />
         <EllowDigitalSection />

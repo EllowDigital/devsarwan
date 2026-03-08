@@ -130,7 +130,7 @@ const JourneySection = () => {
                   isLeft ? "md:flex-row" : "md:flex-row-reverse"
                 }`}
               >
-                <div className={`journey-card ml-16 md:ml-0 md:w-[calc(50%-2.5rem)] glass rounded-2xl p-6 hover-lift ${isLeft ? "md:text-right" : ""}`}>
+                <div className={`journey-card ml-14 sm:ml-16 md:ml-0 md:w-[calc(50%-2.5rem)] glass rounded-2xl p-4 sm:p-6 hover-lift ${isLeft ? "md:text-right" : ""}`}>
                   <span className="text-xs font-mono text-primary font-bold">{m.year}</span>
                   <h3 className="text-lg font-bold mt-1 mb-2">{m.title}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">{m.description}</p>

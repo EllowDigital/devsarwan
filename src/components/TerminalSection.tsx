@@ -233,7 +233,7 @@ const TerminalSection = () => {
           {/* Terminal body */}
           <div
             ref={scrollRef}
-            className="p-5 md:p-6 font-mono text-sm min-h-[400px] max-h-[500px] overflow-y-auto bg-background/50 cursor-text"
+            className="p-4 sm:p-5 md:p-6 font-mono text-xs sm:text-sm min-h-[300px] sm:min-h-[400px] max-h-[500px] overflow-y-auto bg-background/50 cursor-text"
           >
             {lines.map((line, i) => (
               <div key={i} className="mb-1.5">

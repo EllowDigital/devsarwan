@@ -19,7 +19,7 @@ const PortfolioFooter = () => {
   return (
     <footer className="border-t border-border px-6 py-12 relative overflow-hidden">
       <MatrixRain />
-      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
+      <div className="max-w-6xl mx-auto flex flex-col items-center gap-6 md:flex-row md:justify-between relative z-10">
         <div className="text-center md:text-left">
           <p className="font-bold gradient-text text-lg">Sarwan.dev</p>
           <p className="text-xs text-muted-foreground mt-1">
@@ -27,7 +27,7 @@ const PortfolioFooter = () => {
           </p>
         </div>
 
-        <nav className="flex gap-6">
+        <nav className="flex flex-wrap justify-center gap-4 sm:gap-6">
           {links.map((l) => (
             <a key={l.href} href={l.href} className="text-xs text-muted-foreground hover:text-foreground transition-colors">
               {l.label}

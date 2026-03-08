@@ -269,7 +269,7 @@ const GitHubActivitySection = () => {
           </div>
 
           <div className="overflow-x-auto pb-2">
-            <div className="flex gap-[3px] min-w-[700px]">
+            <div className="flex gap-[3px] min-w-[600px] sm:min-w-[700px]">
               {weeks.map((week, wi) => (
                 <div key={wi} className="flex flex-col gap-[3px]">
                   {week.map((level, di) => (
@@ -279,7 +279,7 @@ const GitHubActivitySection = () => {
                       whileInView={{ opacity: 1, scale: 1 }}
                       viewport={{ once: true }}
                       transition={{ delay: (wi * 7 + di) * 0.0008 }}
-                      className={`w-[13px] h-[13px] rounded-[3px] ${LEVEL_COLORS[level]} transition-transform hover:scale-150`}
+                      className={`w-[11px] h-[11px] sm:w-[13px] sm:h-[13px] rounded-[3px] ${LEVEL_COLORS[level]} transition-transform hover:scale-150`}
                       title={`${level} contributions`}
                     />
                   ))}
