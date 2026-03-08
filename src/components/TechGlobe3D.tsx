@@ -147,7 +147,7 @@ const TechGlobe3D = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
           className="glass rounded-2xl border border-border overflow-hidden"
-          style={{ height: "500px" }}
+          style={{ height: "clamp(320px, 50vw, 500px)" }}
         >
           <Suspense
             fallback={

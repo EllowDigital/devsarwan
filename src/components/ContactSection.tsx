@@ -62,8 +62,8 @@ const ContactSection = () => {
           </h2>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-10">
-          <form onSubmit={handleSubmit} className="contact-form glass rounded-2xl p-8 space-y-5">
+        <div className="grid gap-8 md:grid-cols-2 md:gap-10">
+          <form onSubmit={handleSubmit} className="contact-form glass rounded-2xl p-5 sm:p-8 space-y-5">
             {[
               { key: "name", label: "Name", type: "text" },
               { key: "email", label: "Email", type: "email" },

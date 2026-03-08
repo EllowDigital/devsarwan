@@ -195,7 +195,7 @@ const CodePlayground = () => {
 
           {/* Code area */}
           <div className="bg-background/50 overflow-x-auto">
-            <pre className="p-6 text-sm font-mono leading-relaxed">
+            <pre className="p-4 sm:p-6 text-[11px] sm:text-sm font-mono leading-relaxed">
               <code
                 dangerouslySetInnerHTML={{
                   __html: highlightCode(SNIPPETS[activeTab].code, SNIPPETS[activeTab].language),
