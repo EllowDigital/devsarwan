@@ -178,6 +178,14 @@ const TechGlobe3D = () => {
               gl={{ alpha: true, antialias: true }}
             >
               <Scene />
+              <OrbitControls
+                enableZoom={false}
+                enablePan={false}
+                autoRotate
+                autoRotateSpeed={0.5}
+                maxPolarAngle={Math.PI / 1.5}
+                minPolarAngle={Math.PI / 4}
+              />
             </Canvas>
           </Suspense>
         </motion.div>
