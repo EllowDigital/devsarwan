@@ -1,7 +1,8 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Zap, Target, Globe, Calendar } from "lucide-react";
+import { Zap, Target, Globe, Calendar, ArrowRight, ExternalLink, Rocket, Users } from "lucide-react";
+import { motion } from "framer-motion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -10,6 +11,12 @@ const highlights = [
   { icon: Target, label: "Mission", value: "Innovative Solutions" },
   { icon: Globe, label: "Focus", value: "Modern Software" },
   { icon: Zap, label: "Approach", value: "Cutting Edge Tech" },
+];
+
+const roadmap = [
+  { icon: Rocket, title: "Launch Phase", description: "Building core products and establishing our tech foundation.", status: "complete" },
+  { icon: Users, title: "Growth Phase", description: "Expanding the team and scaling our digital solutions platform.", status: "current" },
+  { icon: Globe, title: "Global Reach", description: "Taking EllowDigital's products to international markets.", status: "upcoming" },
 ];
 
 const EllowDigitalSection = () => {
@@ -70,6 +77,16 @@ const EllowDigitalSection = () => {
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             Building innovative digital products and technology solutions that shape the future of software development.
           </p>
+          <div className="flex justify-center mt-6">
+            <a
+              href="https://github.com/EllowDigital"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full glass gradient-border text-sm font-medium hover:scale-105 transition-transform"
+            >
+              <ExternalLink size={14} /> View on GitHub <ArrowRight size={14} />
+            </a>
+          </div>
         </div>
 
         {/* Stats */}
@@ -87,7 +104,7 @@ const EllowDigitalSection = () => {
         </div>
 
         {/* Story cards */}
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 gap-6 mb-16">
           <div className="ellow-card glass rounded-2xl p-8 hover-lift">
             <h3 className="text-xl font-black mb-4">Our Mission</h3>
             <p className="text-muted-foreground leading-relaxed">
@@ -106,6 +123,43 @@ const EllowDigitalSection = () => {
               development, creating tools and platforms that inspire innovation and drive meaningful
               change in the digital landscape.
             </p>
+          </div>
+        </div>
+
+        {/* Roadmap */}
+        <div className="ellow-card glass rounded-2xl p-8">
+          <h3 className="text-xl font-black mb-8 text-center">Roadmap</h3>
+          <div className="flex flex-col md:flex-row gap-6">
+            {roadmap.map((item, i) => {
+              const Icon = item.icon;
+              return (
+                <motion.div
+                  key={item.title}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.15 }}
+                  className={`flex-1 relative p-5 rounded-xl border ${
+                    item.status === "current"
+                      ? "border-primary/40 bg-primary/5"
+                      : item.status === "complete"
+                      ? "border-border bg-secondary/30"
+                      : "border-border/50 bg-secondary/10"
+                  }`}
+                >
+                  <div className="flex items-center gap-2 mb-3">
+                    <Icon size={16} className={item.status === "current" ? "text-primary" : "text-muted-foreground"} />
+                    <span className={`text-xs font-mono uppercase tracking-wider ${
+                      item.status === "current" ? "text-primary" : "text-muted-foreground"
+                    }`}>
+                      {item.status === "complete" ? "✓ Done" : item.status === "current" ? "● In Progress" : "○ Upcoming"}
+                    </span>
+                  </div>
+                  <h4 className="font-bold mb-1">{item.title}</h4>
+                  <p className="text-sm text-muted-foreground">{item.description}</p>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </div>
