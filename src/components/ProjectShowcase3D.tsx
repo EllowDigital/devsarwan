@@ -1,8 +1,19 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import { motion, useInView, useMotionValue, useTransform, useSpring } from "framer-motion";
-import { ExternalLink, Github } from "lucide-react";
+import { ExternalLink, Github, Star, GitFork, Loader2 } from "lucide-react";
 
-const projects = [
+interface ProjectItem {
+  title: string;
+  description: string;
+  tech: string[];
+  github: string;
+  live: string;
+  gradient: string;
+  stars: number;
+  forks: number;
+}
+
+const FALLBACK_PROJECTS: ProjectItem[] = [
   {
     title: "EllowDigital Platform",
     description: "A comprehensive digital solutions platform offering modern software development services.",
@@ -10,50 +21,21 @@ const projects = [
     github: "https://github.com/EllowDigital",
     live: "#",
     gradient: "from-primary/30 via-accent/20 to-primary/10",
-  },
-  {
-    title: "AI Content Generator",
-    description: "An intelligent content generation tool powered by machine learning and NLP.",
-    tech: ["Python", "React", "OpenAI", "FastAPI"],
-    github: "#",
-    live: "#",
-    gradient: "from-accent/30 via-primary/20 to-accent/10",
-  },
-  {
-    title: "DevDash Dashboard",
-    description: "Real-time developer dashboard for monitoring project metrics and team productivity.",
-    tech: ["React", "TypeScript", "D3.js", "Firebase"],
-    github: "#",
-    live: "#",
-    gradient: "from-primary/25 via-primary/15 to-accent/10",
-  },
-  {
-    title: "API Gateway Service",
-    description: "A scalable API gateway with rate limiting, auth, and request routing.",
-    tech: ["Node.js", "Express", "Redis", "Docker"],
-    github: "#",
-    live: "#",
-    gradient: "from-accent/25 via-accent/15 to-primary/10",
-  },
-  {
-    title: "CodeSnap CLI",
-    description: "A developer CLI tool for generating beautiful code screenshots instantly.",
-    tech: ["TypeScript", "Node.js", "Sharp"],
-    github: "#",
-    live: "#",
-    gradient: "from-primary/20 via-accent/20 to-primary/15",
-  },
-  {
-    title: "Portfolio CMS",
-    description: "A headless CMS designed for developer portfolios with markdown and Git sync.",
-    tech: ["React", "Node.js", "MongoDB", "GraphQL"],
-    github: "#",
-    live: "#",
-    gradient: "from-accent/20 via-primary/20 to-accent/15",
+    stars: 0,
+    forks: 0,
   },
 ];
 
-const TiltCard = ({ project, index }: { project: typeof projects[0]; index: number }) => {
+const GRADIENT_POOL = [
+  "from-primary/30 via-accent/20 to-primary/10",
+  "from-accent/30 via-primary/20 to-accent/10",
+  "from-primary/25 via-primary/15 to-accent/10",
+  "from-accent/25 via-accent/15 to-primary/10",
+  "from-primary/20 via-accent/20 to-primary/15",
+  "from-accent/20 via-primary/20 to-accent/15",
+];
+
+const TiltCard = ({ project, index }: { project: ProjectItem; index: number }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -94,7 +76,6 @@ const TiltCard = ({ project, index }: { project: typeof projects[0]; index: numb
         style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
         className="relative glass rounded-2xl overflow-hidden border border-border cursor-pointer group"
       >
-        {/* Glare overlay */}
         <motion.div
           className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none z-10"
           style={{
@@ -106,7 +87,6 @@ const TiltCard = ({ project, index }: { project: typeof projects[0]; index: numb
           }}
         />
 
-        {/* Gradient header with 3D depth */}
         <div
           className={`h-40 bg-gradient-to-br ${project.gradient} relative overflow-hidden`}
           style={{ transform: "translateZ(20px)" }}
@@ -118,7 +98,6 @@ const TiltCard = ({ project, index }: { project: typeof projects[0]; index: numb
           </div>
           <div className="absolute inset-0 bg-gradient-to-t from-card/90 to-transparent" />
 
-          {/* Floating orbs */}
           <motion.div
             animate={{ y: [0, -8, 0], x: [0, 4, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
@@ -131,11 +110,20 @@ const TiltCard = ({ project, index }: { project: typeof projects[0]; index: numb
           />
         </div>
 
-        {/* Content */}
         <div className="p-6 relative" style={{ transform: "translateZ(30px)" }}>
-          <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">
-            {project.title}
-          </h3>
+          <div className="flex items-center justify-between mb-2">
+            <h3 className="text-xl font-bold group-hover:text-primary transition-colors">
+              {project.title}
+            </h3>
+            <div className="flex gap-3 items-center text-xs text-muted-foreground">
+              {project.stars > 0 && (
+                <span className="flex items-center gap-1"><Star size={12} /> {project.stars}</span>
+              )}
+              {project.forks > 0 && (
+                <span className="flex items-center gap-1"><GitFork size={12} /> {project.forks}</span>
+              )}
+            </div>
+          </div>
           <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
             {project.description}
           </p>
@@ -154,20 +142,25 @@ const TiltCard = ({ project, index }: { project: typeof projects[0]; index: numb
           <div className="flex gap-3">
             <a
               href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors"
             >
               <Github size={14} /> Source
             </a>
-            <a
-              href={project.live}
-              className="inline-flex items-center gap-1.5 text-xs font-medium text-primary hover:text-primary/80 transition-colors"
-            >
-              <ExternalLink size={14} /> Live Demo
-            </a>
+            {project.live && project.live !== "#" && (
+              <a
+                href={project.live}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-xs font-medium text-primary hover:text-primary/80 transition-colors"
+              >
+                <ExternalLink size={14} /> Live Demo
+              </a>
+            )}
           </div>
         </div>
 
-        {/* Bottom glow on hover */}
         <motion.div
           className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-accent to-primary"
           initial={{ scaleX: 0 }}
@@ -182,7 +175,49 @@ const TiltCard = ({ project, index }: { project: typeof projects[0]; index: numb
 
 const ProjectShowcase3D = () => {
   const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { once: true });
+  const [projects, setProjects] = useState<ProjectItem[]>(FALLBACK_PROJECTS);
+  const [loading, setLoading] = useState(true);
+
+  const fetchProjects = useCallback(async () => {
+    try {
+      const [userRes, orgRes] = await Promise.all([
+        fetch("https://api.github.com/users/devsarwan/repos?per_page=10&sort=stars"),
+        fetch("https://api.github.com/orgs/EllowDigital/repos?per_page=10&sort=stars"),
+      ]);
+
+      const userRepos = userRes.ok ? await userRes.json() : [];
+      const orgRepos = orgRes.ok ? await orgRes.json() : [];
+      const allRepos = [...orgRepos, ...userRepos];
+
+      const seen = new Set<number>();
+      const unique = allRepos.filter((r: any) => {
+        if (seen.has(r.id)) return false;
+        seen.add(r.id);
+        return true;
+      });
+
+      const mapped: ProjectItem[] = unique.slice(0, 6).map((repo: any, i: number) => ({
+        title: repo.name.replace(/[-_]/g, " ").replace(/\b\w/g, (c: string) => c.toUpperCase()),
+        description: repo.description || `A ${repo.language || "code"} project.`,
+        tech: [repo.language, ...(repo.topics?.slice(0, 2) || [])].filter(Boolean),
+        github: repo.html_url,
+        live: repo.homepage || "#",
+        gradient: GRADIENT_POOL[i % GRADIENT_POOL.length],
+        stars: repo.stargazers_count,
+        forks: repo.forks_count,
+      }));
+
+      if (mapped.length) setProjects(mapped);
+    } catch {
+      // keep fallback
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchProjects();
+  }, [fetchProjects]);
 
   return (
     <section id="showcase" className="section-padding relative" ref={sectionRef}>
@@ -203,16 +238,22 @@ const ProjectShowcase3D = () => {
             Immersive <span className="gradient-text">projects.</span>
           </h2>
           <p className="text-muted-foreground mt-4 max-w-xl mx-auto">
-            Hover over the cards to experience the depth. Each project is crafted
-            with precision and passion.
+            Hover over the cards to experience the depth. Each project is crafted with precision and passion.
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, i) => (
-            <TiltCard key={project.title} project={project} index={i} />
-          ))}
-        </div>
+        {loading ? (
+          <div className="flex items-center justify-center py-16">
+            <Loader2 className="w-6 h-6 animate-spin text-primary" />
+            <span className="ml-3 text-sm text-muted-foreground">Loading projects...</span>
+          </div>
+        ) : (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {projects.map((project, i) => (
+              <TiltCard key={project.title} project={project} index={i} />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

@@ -1,6 +1,6 @@
 import { useRef, useMemo, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Text, Float, OrbitControls } from "@react-three/drei";
+import { Float, OrbitControls } from "@react-three/drei";
 import { motion } from "framer-motion";
 import * as THREE from "three";
 
@@ -18,7 +18,6 @@ function TechNode({ text, position, index }: { text: string; position: [number, 
   useFrame(({ clock }) => {
     if (!meshRef.current) return;
     const t = clock.getElapsedTime() + offset;
-    // Orbit
     const radius = Math.sqrt(position[0] ** 2 + position[2] ** 2);
     const angle = Math.atan2(position[2], position[0]) + t * 0.15;
     meshRef.current.position.x = Math.cos(angle) * radius;
@@ -29,7 +28,6 @@ function TechNode({ text, position, index }: { text: string; position: [number, 
   return (
     <Float speed={1.5} rotationIntensity={0.2} floatIntensity={0.3}>
       <mesh ref={meshRef} position={position}>
-        {/* Glowing sphere */}
         <sphereGeometry args={[0.12, 16, 16]} />
         <meshStandardMaterial
           color="#2dd4bf"
@@ -38,17 +36,6 @@ function TechNode({ text, position, index }: { text: string; position: [number, 
           transparent
           opacity={0.8}
         />
-        {/* Label */}
-        <Text
-          position={[0, 0.25, 0]}
-          fontSize={0.15}
-          color="#94a3b8"
-          anchorX="center"
-          anchorY="bottom"
-          font="/fonts/Inter-Medium.woff"
-        >
-          {text}
-        </Text>
       </mesh>
     </Float>
   );
@@ -87,7 +74,6 @@ function ConnectionLines() {
 
   return (
     <group ref={linesRef}>
-      {/* Ring indicators */}
       {[1.5, 2.5, 3.5].map((r, i) => (
         <mesh key={i} rotation={[Math.PI / 2, 0, 0]}>
           <ringGeometry args={[r - 0.01, r + 0.01, 64]} />
