@@ -77,10 +77,21 @@ const Navbar = () => {
         <div className="flex md:hidden items-center gap-3">
           <button
             onClick={() => setDark(!dark)}
-            className="p-2 rounded-lg glass"
+            className="relative p-2 rounded-lg glass overflow-hidden"
             aria-label="Toggle theme"
           >
-            {dark ? <Sun size={16} /> : <Moon size={16} />}
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.span
+                key={dark ? "sun-m" : "moon-m"}
+                initial={{ y: -16, opacity: 0, rotate: -90 }}
+                animate={{ y: 0, opacity: 1, rotate: 0 }}
+                exit={{ y: 16, opacity: 0, rotate: 90 }}
+                transition={{ duration: 0.25 }}
+                className="block"
+              >
+                {dark ? <Sun size={16} /> : <Moon size={16} />}
+              </motion.span>
+            </AnimatePresence>
           </button>
           <button onClick={() => setMobileOpen(!mobileOpen)} aria-label="Menu">
             {mobileOpen ? <X size={20} /> : <Menu size={20} />}
