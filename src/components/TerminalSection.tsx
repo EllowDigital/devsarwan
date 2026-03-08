@@ -1,61 +1,193 @@
-import { useEffect, useState, useRef } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, useInView } from "framer-motion";
 
-const commands = [
-  { prompt: "sarwan@dev:~$", cmd: "whoami", output: "Sarwan — Full Stack Developer & Founder" },
-  { prompt: "sarwan@dev:~$", cmd: "cat skills.json", output: '{\n  "frontend": ["React", "TypeScript", "TailwindCSS"],\n  "backend": ["Node.js", "Python", "Express"],\n  "database": ["PostgreSQL", "MongoDB", "Firebase"],\n  "tools": ["Git", "Docker", "VS Code"]\n}' },
-  { prompt: "sarwan@dev:~$", cmd: "ls projects/", output: "ellowdigital/  ai-content-gen/  devdash/  api-gateway/  codesnap-cli/" },
-  { prompt: "sarwan@dev:~$", cmd: "echo $MISSION", output: '"Building powerful digital experiences that make a difference."' },
-  { prompt: "sarwan@dev:~$", cmd: "git log --oneline -3", output: "a1b2c3d feat: launch EllowDigital platform\ne4f5g6h refactor: optimize API gateway\ni7j8k9l fix: improve dashboard performance" },
-  { prompt: "sarwan@dev:~$", cmd: "uptime", output: "Coding since 2022 — still going strong 🚀" },
-];
+const COMMANDS: Record<string, string> = {
+  help: `Available commands:
+  help         — Show available commands
+  about        — About Sarwan
+  skills       — Programming skills & technologies
+  projects     — Featured projects
+  ellowdigital — About EllowDigital
+  contact      — Contact information & socials
+  clear        — Clear the terminal`,
+  about: `👋 Hi, I'm Sarwan — Full Stack Developer & Founder of EllowDigital.
+
+I build powerful digital experiences using modern technologies.
+Passionate about clean code, scalable architecture, and innovative software.
+Coding since 2022 — turning ideas into production-ready products.`,
+  skills: `🛠  Technical Skills
+─────────────────────────────────
+Frontend   │ React, TypeScript, TailwindCSS, Next.js
+Backend    │ Node.js, Python, Express, FastAPI
+Database   │ PostgreSQL, MongoDB, Firebase, Redis
+Tools      │ Git, Docker, VS Code, Linux
+Other      │ REST APIs, GraphQL, CI/CD, AWS`,
+  projects: `📁 Featured Projects
+─────────────────────────────────
+1. EllowDigital Platform  — Full-stack digital solutions platform
+2. AI Content Generator   — ML-powered content creation tool
+3. DevDash Dashboard      — Real-time developer metrics dashboard
+4. API Gateway Service    — Scalable API gateway with auth & rate limiting
+5. CodeSnap CLI           — Beautiful code screenshot generator
+6. Portfolio CMS          — Headless CMS for developer portfolios
+
+Type a project number for details, e.g. "project 1"`,
+  ellowdigital: `🏢 EllowDigital
+─────────────────────────────────
+Founded    │ June 26, 2024
+Founder    │ Sarwan
+Mission    │ Building innovative digital products
+Focus      │ Modern software development & technology solutions
+Website    │ ellowdigital.com
+
+"Empowering ideas through cutting-edge technology."`,
+  contact: `📬 Get in Touch
+─────────────────────────────────
+Email      │ hello@sarwan.dev
+GitHub     │ github.com/sarwan
+LinkedIn   │ linkedin.com/in/sarwan
+Twitter    │ twitter.com/sarwan
+
+Let's build something amazing together! 🚀`,
+};
+
+const SUGGESTIONS = Object.keys(COMMANDS);
+
+const WELCOME = `Welcome to Sarwan's Developer Terminal v2.0
+Type "help" to see available commands.
+──────────────────────────────────────────`;
+
+interface TerminalLine {
+  type: "input" | "output" | "system";
+  content: string;
+}
 
 const TerminalSection = () => {
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const [visibleLines, setVisibleLines] = useState<number>(0);
-  const [typingIndex, setTypingIndex] = useState(0);
-  const [currentText, setCurrentText] = useState("");
-  const [showOutput, setShowOutput] = useState(false);
-  const [phase, setPhase] = useState<"typing" | "output" | "done">("typing");
 
+  const [lines, setLines] = useState<TerminalLine[]>([
+    { type: "system", content: WELCOME },
+  ]);
+  const [input, setInput] = useState("");
+  const [history, setHistory] = useState<string[]>([]);
+  const [historyIdx, setHistoryIdx] = useState(-1);
+  const [suggestion, setSuggestion] = useState("");
+  const [isAutoTyping, setIsAutoTyping] = useState(false);
+  const [autoTypeDone, setAutoTypeDone] = useState(false);
+
+  // Auto-type "help" on first view
   useEffect(() => {
-    if (!isInView) return;
+    if (!isInView || autoTypeDone) return;
+    setIsAutoTyping(true);
+    const cmd = "help";
+    let i = 0;
+    const timer = setInterval(() => {
+      i++;
+      setInput(cmd.slice(0, i));
+      if (i >= cmd.length) {
+        clearInterval(timer);
+        setTimeout(() => {
+          executeCommand(cmd);
+          setInput("");
+          setIsAutoTyping(false);
+          setAutoTypeDone(true);
+        }, 400);
+      }
+    }, 80);
+    return () => clearInterval(timer);
+  }, [isInView]);
 
-    if (visibleLines >= commands.length) return;
+  // Scroll to bottom on new lines
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [lines]);
 
-    const cmd = commands[visibleLines];
+  // Update suggestion
+  useEffect(() => {
+    if (!input.trim()) {
+      setSuggestion("");
+      return;
+    }
+    const match = SUGGESTIONS.find(
+      (s) => s.startsWith(input.toLowerCase()) && s !== input.toLowerCase()
+    );
+    setSuggestion(match || "");
+  }, [input]);
 
-    if (phase === "typing") {
-      if (typingIndex < cmd.cmd.length) {
-        const timer = setTimeout(() => {
-          setCurrentText(cmd.cmd.slice(0, typingIndex + 1));
-          setTypingIndex(typingIndex + 1);
-        }, 35 + Math.random() * 45);
-        return () => clearTimeout(timer);
+  const executeCommand = useCallback(
+    (cmd: string) => {
+      const trimmed = cmd.trim().toLowerCase();
+      const newLines: TerminalLine[] = [
+        ...lines,
+        { type: "input", content: cmd.trim() },
+      ];
+
+      if (trimmed === "clear") {
+        setLines([{ type: "system", content: WELCOME }]);
+        return;
+      }
+
+      const output = COMMANDS[trimmed];
+      if (output) {
+        newLines.push({ type: "output", content: output });
+      } else if (trimmed === "") {
+        // do nothing
       } else {
-        const timer = setTimeout(() => {
-          setShowOutput(true);
-          setPhase("output");
-        }, 300);
-        return () => clearTimeout(timer);
+        newLines.push({
+          type: "output",
+          content: `Command not found: ${cmd.trim()}\nType "help" to see available commands.`,
+        });
+      }
+      setLines(newLines);
+    },
+    [lines]
+  );
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (isAutoTyping) return;
+    const cmd = input;
+    executeCommand(cmd);
+    if (cmd.trim()) setHistory((h) => [cmd.trim(), ...h]);
+    setHistoryIdx(-1);
+    setInput("");
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Tab") {
+      e.preventDefault();
+      if (suggestion) setInput(suggestion);
+    }
+    if (e.key === "ArrowUp") {
+      e.preventDefault();
+      if (history.length > 0) {
+        const next = Math.min(historyIdx + 1, history.length - 1);
+        setHistoryIdx(next);
+        setInput(history[next]);
       }
     }
-
-    if (phase === "output") {
-      const timer = setTimeout(() => {
-        setVisibleLines(visibleLines + 1);
-        setTypingIndex(0);
-        setCurrentText("");
-        setShowOutput(false);
-        setPhase("typing");
-      }, 800);
-      return () => clearTimeout(timer);
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      if (historyIdx > 0) {
+        const next = historyIdx - 1;
+        setHistoryIdx(next);
+        setInput(history[next]);
+      } else {
+        setHistoryIdx(-1);
+        setInput("");
+      }
     }
-  }, [isInView, visibleLines, typingIndex, phase]);
+  };
+
+  const focusInput = () => inputRef.current?.focus();
 
   return (
-    <section className="section-padding relative" ref={ref}>
+    <section className="section-padding relative" ref={ref} id="terminal">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[160px]" />
 
       <div className="max-w-4xl mx-auto relative">
@@ -65,10 +197,19 @@ const TerminalSection = () => {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <p className="text-sm font-mono text-primary tracking-widest uppercase mb-3">Terminal</p>
+          <p className="text-sm font-mono text-primary tracking-widest uppercase mb-3">
+            Interactive Terminal
+          </p>
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight">
-            Behind the <span className="gradient-text">screen.</span>
+            Explore my <span className="gradient-text">profile.</span>
           </h2>
+          <p className="text-muted-foreground mt-3 text-sm">
+            Type commands to discover more about me. Try{" "}
+            <code className="text-primary bg-primary/10 px-1.5 py-0.5 rounded text-xs">
+              help
+            </code>{" "}
+            to get started.
+          </p>
         </motion.div>
 
         <motion.div
@@ -77,47 +218,86 @@ const TerminalSection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
           className="rounded-2xl overflow-hidden glass border border-border shadow-2xl"
+          onClick={focusInput}
         >
           {/* Terminal header */}
           <div className="flex items-center gap-2 px-4 py-3 border-b border-border bg-secondary/50">
             <div className="w-3 h-3 rounded-full bg-destructive/80" />
             <div className="w-3 h-3 rounded-full bg-primary/40" />
             <div className="w-3 h-3 rounded-full bg-primary/80" />
-            <span className="ml-3 text-xs font-mono text-muted-foreground">sarwan@dev — zsh</span>
+            <span className="ml-3 text-xs font-mono text-muted-foreground">
+              sarwan@dev — interactive terminal
+            </span>
           </div>
 
           {/* Terminal body */}
-          <div className="p-5 md:p-6 font-mono text-sm space-y-3 min-h-[360px] bg-background/50">
-            {/* Completed lines */}
-            {commands.slice(0, visibleLines).map((cmd, i) => (
-              <div key={i}>
-                <div className="flex gap-2 flex-wrap">
-                  <span className="text-primary shrink-0">{cmd.prompt}</span>
-                  <span className="text-foreground">{cmd.cmd}</span>
-                </div>
-                <pre className="text-muted-foreground text-xs mt-1 ml-0 whitespace-pre-wrap leading-relaxed">{cmd.output}</pre>
+          <div
+            ref={scrollRef}
+            className="p-5 md:p-6 font-mono text-sm min-h-[400px] max-h-[500px] overflow-y-auto bg-background/50 cursor-text"
+          >
+            {lines.map((line, i) => (
+              <div key={i} className="mb-1.5">
+                {line.type === "input" && (
+                  <div className="flex gap-2 flex-wrap">
+                    <span className="text-primary shrink-0">
+                      sarwan@dev:~$
+                    </span>
+                    <span className="text-foreground">{line.content}</span>
+                  </div>
+                )}
+                {line.type === "output" && (
+                  <pre className="text-muted-foreground text-xs whitespace-pre-wrap leading-relaxed pl-0">
+                    {line.content}
+                  </pre>
+                )}
+                {line.type === "system" && (
+                  <pre className="text-primary/70 text-xs whitespace-pre-wrap leading-relaxed">
+                    {line.content}
+                  </pre>
+                )}
               </div>
             ))}
 
-            {/* Currently typing line */}
-            {visibleLines < commands.length && (
-              <div>
-                <div className="flex gap-2 flex-wrap">
-                  <span className="text-primary shrink-0">{commands[visibleLines].prompt}</span>
-                  <span className="text-foreground">
-                    {currentText}
-                    <span className="inline-block w-2 h-4 bg-primary ml-0.5 animate-glow-pulse align-middle" />
+            {/* Input line */}
+            <form onSubmit={handleSubmit} className="flex gap-2 items-center relative">
+              <span className="text-primary shrink-0">sarwan@dev:~$</span>
+              <div className="relative flex-1">
+                {suggestion && (
+                  <span className="absolute top-0 left-0 text-muted-foreground/30 pointer-events-none select-none">
+                    {suggestion}
                   </span>
-                </div>
-                {showOutput && (
-                  <motion.pre
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="text-muted-foreground text-xs mt-1 ml-0 whitespace-pre-wrap leading-relaxed"
-                  >
-                    {commands[visibleLines].output}
-                  </motion.pre>
                 )}
+                <input
+                  ref={inputRef}
+                  type="text"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  className="bg-transparent outline-none text-foreground w-full caret-primary"
+                  autoFocus
+                  spellCheck={false}
+                  autoComplete="off"
+                  disabled={isAutoTyping}
+                />
+              </div>
+            </form>
+
+            {/* Suggestion chips */}
+            {!isAutoTyping && !input && (
+              <div className="flex flex-wrap gap-1.5 mt-4 opacity-50">
+                {SUGGESTIONS.map((s) => (
+                  <button
+                    key={s}
+                    type="button"
+                    onClick={() => {
+                      setInput(s);
+                      inputRef.current?.focus();
+                    }}
+                    className="text-xs px-2 py-0.5 rounded bg-secondary text-secondary-foreground hover:bg-primary/20 hover:text-primary transition-colors"
+                  >
+                    {s}
+                  </button>
+                ))}
               </div>
             )}
           </div>
