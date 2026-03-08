@@ -26,7 +26,7 @@ const Index = () => {
     sections.forEach((section) => {
       gsap.fromTo(
         section,
-        { opacity: 0.15, y: 30 },
+        { opacity: 0, y: 40 },
         {
           opacity: 1,
           y: 0,
@@ -35,8 +35,7 @@ const Index = () => {
           scrollTrigger: {
             trigger: section,
             start: "top 85%",
-            end: "top 30%",
-            scrub: 0.3,
+            toggleActions: "play none none none",
           },
         }
       );
