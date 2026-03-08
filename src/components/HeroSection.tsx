@@ -149,7 +149,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: item.delay, duration: 1.2 }}
-          className={`absolute glass rounded-lg px-3 py-2 font-mono text-xs text-muted-foreground select-none pointer-events-none hidden lg:block ${
+          className={`absolute glass rounded-lg px-3 py-2 font-mono text-xs text-muted-foreground select-none pointer-events-none hidden xl:block ${
             i % 2 === 0 ? "animate-float" : "animate-float-delayed"
           }`}
           style={{
