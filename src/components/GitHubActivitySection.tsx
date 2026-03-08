@@ -2,7 +2,7 @@ import { useRef, useState, useEffect, useMemo, useCallback } from "react";
 import { motion, useInView } from "framer-motion";
 import { GitBranch, GitCommit, Code2, Star, Folder, Activity, Loader2 } from "lucide-react";
 
-const GITHUB_USERNAME = "sarwan-dev";
+const GITHUB_USERNAME = "devsarwan";
 
 const LEVEL_COLORS = [
   "bg-secondary",
