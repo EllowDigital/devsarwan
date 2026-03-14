@@ -30,7 +30,9 @@ const Index = () => {
   return (
     <>
       {showSplash && <SplashScreen onComplete={handleSplashComplete} />}
-      <div className={`min-h-screen bg-background text-foreground overflow-x-hidden noise-overlay ${showSplash ? "opacity-0" : "animate-fade-in"}`}>
+      <div
+        className={`min-h-screen bg-background text-foreground overflow-x-hidden noise-overlay ${showSplash ? "opacity-0" : "animate-fade-in"}`}
+      >
         <ScrollProgress />
         <CursorGlow />
         <Navbar />

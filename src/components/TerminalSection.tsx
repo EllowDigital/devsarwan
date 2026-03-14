@@ -68,9 +68,7 @@ const TerminalSection = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-  const [lines, setLines] = useState<TerminalLine[]>([
-    { type: "system", content: WELCOME },
-  ]);
+  const [lines, setLines] = useState<TerminalLine[]>([{ type: "system", content: WELCOME }]);
   const [input, setInput] = useState("");
   const [history, setHistory] = useState<string[]>([]);
   const [historyIdx, setHistoryIdx] = useState(-1);
@@ -122,10 +120,7 @@ const TerminalSection = () => {
   const executeCommand = useCallback(
     (cmd: string) => {
       const trimmed = cmd.trim().toLowerCase();
-      const newLines: TerminalLine[] = [
-        ...lines,
-        { type: "input", content: cmd.trim() },
-      ];
+      const newLines: TerminalLine[] = [...lines, { type: "input", content: cmd.trim() }];
 
       if (trimmed === "clear") {
         setLines([{ type: "system", content: WELCOME }]);
@@ -205,9 +200,7 @@ const TerminalSection = () => {
           </h2>
           <p className="text-muted-foreground mt-3 text-sm">
             Type commands to discover more about me. Try{" "}
-            <code className="text-primary bg-primary/10 px-1.5 py-0.5 rounded text-xs">
-              help
-            </code>{" "}
+            <code className="text-primary bg-primary/10 px-1.5 py-0.5 rounded text-xs">help</code>{" "}
             to get started.
           </p>
         </motion.div>
@@ -239,9 +232,7 @@ const TerminalSection = () => {
               <div key={i} className="mb-1.5">
                 {line.type === "input" && (
                   <div className="flex gap-2 flex-wrap">
-                    <span className="text-primary shrink-0">
-                      sarwan@dev:~$
-                    </span>
+                    <span className="text-primary shrink-0">sarwan@dev:~$</span>
                     <span className="text-foreground">{line.content}</span>
                   </div>
                 )}

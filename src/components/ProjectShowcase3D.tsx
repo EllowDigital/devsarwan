@@ -16,7 +16,8 @@ interface ProjectItem {
 const FALLBACK_PROJECTS: ProjectItem[] = [
   {
     title: "EllowDigital Platform",
-    description: "A comprehensive digital solutions platform offering modern software development services.",
+    description:
+      "A comprehensive digital solutions platform offering modern software development services.",
     tech: ["React", "Node.js", "PostgreSQL", "TailwindCSS"],
     github: "https://github.com/EllowDigital",
     live: "#",
@@ -42,8 +43,14 @@ const TiltCard = ({ project, index }: { project: ProjectItem; index: number }) =
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [12, -12]), { stiffness: 200, damping: 20 });
-  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-12, 12]), { stiffness: 200, damping: 20 });
+  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [12, -12]), {
+    stiffness: 200,
+    damping: 20,
+  });
+  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-12, 12]), {
+    stiffness: 200,
+    damping: 20,
+  });
   const glareX = useTransform(mouseX, [-0.5, 0.5], [0, 100]);
   const glareY = useTransform(mouseY, [-0.5, 0.5], [0, 100]);
 
@@ -117,10 +124,14 @@ const TiltCard = ({ project, index }: { project: ProjectItem; index: number }) =
             </h3>
             <div className="flex gap-3 items-center text-xs text-muted-foreground">
               {project.stars > 0 && (
-                <span className="flex items-center gap-1"><Star size={12} /> {project.stars}</span>
+                <span className="flex items-center gap-1">
+                  <Star size={12} /> {project.stars}
+                </span>
               )}
               {project.forks > 0 && (
-                <span className="flex items-center gap-1"><GitFork size={12} /> {project.forks}</span>
+                <span className="flex items-center gap-1">
+                  <GitFork size={12} /> {project.forks}
+                </span>
               )}
             </div>
           </div>
@@ -238,7 +249,8 @@ const ProjectShowcase3D = () => {
             Immersive <span className="gradient-text">projects.</span>
           </h2>
           <p className="text-muted-foreground mt-4 max-w-xl mx-auto">
-            Hover over the cards to experience the depth. Each project is crafted with precision and passion.
+            Hover over the cards to experience the depth. Each project is crafted with precision and
+            passion.
           </p>
         </motion.div>
 

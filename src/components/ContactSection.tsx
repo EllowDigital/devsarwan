@@ -19,8 +19,11 @@ const ContactSection = () => {
       sectionRef.current.querySelector(".contact-form"),
       { opacity: 0, x: -60, rotateY: 10 },
       {
-        opacity: 1, x: 0, rotateY: 0,
-        duration: 1, ease: "power3.out",
+        opacity: 1,
+        x: 0,
+        rotateY: 0,
+        duration: 1,
+        ease: "power3.out",
         scrollTrigger: { trigger: sectionRef.current, start: "top 70%" },
       }
     );
@@ -28,8 +31,12 @@ const ContactSection = () => {
       sectionRef.current.querySelector(".contact-info"),
       { opacity: 0, x: 60, rotateY: -10 },
       {
-        opacity: 1, x: 0, rotateY: 0,
-        duration: 1, delay: 0.2, ease: "power3.out",
+        opacity: 1,
+        x: 0,
+        rotateY: 0,
+        duration: 1,
+        delay: 0.2,
+        ease: "power3.out",
         scrollTrigger: { trigger: sectionRef.current, start: "top 70%" },
       }
     );
@@ -44,7 +51,12 @@ const ContactSection = () => {
 
   return (
     <section id="contact" className="section-padding relative" ref={sectionRef}>
-      <ParallaxOrb color="primary" size="lg" speed={-0.3} position={{ bottom: "0%", right: "0%" }} />
+      <ParallaxOrb
+        color="primary"
+        size="lg"
+        speed={-0.3}
+        position={{ bottom: "0%", right: "0%" }}
+      />
       <ParallaxOrb color="accent" size="sm" speed={0.35} position={{ top: "20%", left: "10%" }} />
 
       <div className="max-w-4xl mx-auto relative">
@@ -63,17 +75,24 @@ const ContactSection = () => {
         </motion.div>
 
         <div className="grid gap-8 md:grid-cols-2 md:gap-10">
-          <form onSubmit={handleSubmit} className="contact-form glass rounded-2xl p-5 sm:p-8 space-y-5">
+          <form
+            onSubmit={handleSubmit}
+            className="contact-form glass rounded-2xl p-5 sm:p-8 space-y-5"
+          >
             {[
               { key: "name", label: "Name", type: "text" },
               { key: "email", label: "Email", type: "email" },
             ].map((field) => (
               <div key={field.key} className="relative">
-                <label className={`absolute left-4 transition-all duration-300 pointer-events-none ${
-                  focused === field.key || form[field.key as keyof typeof form]
-                    ? "top-1 text-[10px] text-primary font-semibold"
-                    : "top-3.5 text-sm text-muted-foreground"
-                }`}>{field.label}</label>
+                <label
+                  className={`absolute left-4 transition-all duration-300 pointer-events-none ${
+                    focused === field.key || form[field.key as keyof typeof form]
+                      ? "top-1 text-[10px] text-primary font-semibold"
+                      : "top-3.5 text-sm text-muted-foreground"
+                  }`}
+                >
+                  {field.label}
+                </label>
                 <input
                   type={field.type}
                   required
@@ -86,11 +105,15 @@ const ContactSection = () => {
               </div>
             ))}
             <div className="relative">
-              <label className={`absolute left-4 transition-all duration-300 pointer-events-none ${
-                focused === "message" || form.message
-                  ? "top-1 text-[10px] text-primary font-semibold"
-                  : "top-3.5 text-sm text-muted-foreground"
-              }`}>Message</label>
+              <label
+                className={`absolute left-4 transition-all duration-300 pointer-events-none ${
+                  focused === "message" || form.message
+                    ? "top-1 text-[10px] text-primary font-semibold"
+                    : "top-3.5 text-sm text-muted-foreground"
+                }`}
+              >
+                Message
+              </label>
               <textarea
                 required
                 rows={4}
@@ -105,7 +128,11 @@ const ContactSection = () => {
               type="submit"
               className="group w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-primary text-primary-foreground font-semibold text-sm transition-all glow-primary hover:scale-[1.02] active:scale-95"
             >
-              <Send size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" /> Send Message
+              <Send
+                size={16}
+                className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+              />{" "}
+              Send Message
             </button>
           </form>
 
@@ -116,7 +143,8 @@ const ContactSection = () => {
                 I'm always open to discussing new projects, creative ideas, or opportunities.
               </p>
               <p className="text-muted-foreground text-sm leading-relaxed">
-                Whether you have a question or just want to say hi — my inbox is always open. Let's make something great together.
+                Whether you have a question or just want to say hi — my inbox is always open. Let's
+                make something great together.
               </p>
             </div>
 

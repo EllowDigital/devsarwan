@@ -100,19 +100,28 @@ CREATE TRIGGER set_timestamp
 
 // Simple syntax highlighting with semantic tokens
 const highlightCode = (code: string, lang: string): string => {
-  let html = code
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;");
+  let html = code.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
   // Comments
-  html = html.replace(/(\/\/.*$|\/\*[\s\S]*?\*\/|--.*$)/gm, '<span class="text-muted-foreground/60">$1</span>');
+  html = html.replace(
+    /(\/\/.*$|\/\*[\s\S]*?\*\/|--.*$)/gm,
+    '<span class="text-muted-foreground/60">$1</span>'
+  );
   // Strings
-  html = html.replace(/(&quot;.*?&quot;|'.*?'|`[^`]*`|"[^"]*")/g, '<span style="color: hsl(var(--accent))">$1</span>');
+  html = html.replace(
+    /(&quot;.*?&quot;|'.*?'|`[^`]*`|"[^"]*")/g,
+    '<span style="color: hsl(var(--accent))">$1</span>'
+  );
   // Keywords
-  html = html.replace(/\b(import|export|from|const|let|var|function|return|async|await|interface|type|enum|class|extends|implements|new|if|else|for|while|default|CREATE|TABLE|PRIMARY|KEY|DEFAULT|NOT|NULL|UNIQUE|INDEX|ON|INSERT|INTO|VALUES|SELECT|FROM|WHERE|ORDER|BY|DESC|RETURNING|TRIGGER|BEFORE|UPDATE|FOR|EACH|ROW|EXECUTE|FUNCTION|RETURNS|BEGIN|END|AS|LANGUAGE|OR|REPLACE)\b/g, '<span style="color: hsl(var(--primary))">$1</span>');
+  html = html.replace(
+    /\b(import|export|from|const|let|var|function|return|async|await|interface|type|enum|class|extends|implements|new|if|else|for|while|default|CREATE|TABLE|PRIMARY|KEY|DEFAULT|NOT|NULL|UNIQUE|INDEX|ON|INSERT|INTO|VALUES|SELECT|FROM|WHERE|ORDER|BY|DESC|RETURNING|TRIGGER|BEFORE|UPDATE|FOR|EACH|ROW|EXECUTE|FUNCTION|RETURNS|BEGIN|END|AS|LANGUAGE|OR|REPLACE)\b/g,
+    '<span style="color: hsl(var(--primary))">$1</span>'
+  );
   // Types
-  html = html.replace(/\b(string|number|boolean|void|any|UUID|VARCHAR|TEXT|TIMESTAMPTZ|INTEGER|BOOLEAN)\b/g, '<span style="color: hsl(var(--accent))">$1</span>');
+  html = html.replace(
+    /\b(string|number|boolean|void|any|UUID|VARCHAR|TEXT|TIMESTAMPTZ|INTEGER|BOOLEAN)\b/g,
+    '<span style="color: hsl(var(--accent))">$1</span>'
+  );
 
   return html;
 };
@@ -145,7 +154,8 @@ const CodePlayground = () => {
             How I <span className="gradient-text">build.</span>
           </h2>
           <p className="text-muted-foreground mt-4 max-w-xl mx-auto">
-            Example code snippets showcasing my development approach — clean, typed, and production-ready.
+            Example code snippets showcasing my development approach — clean, typed, and
+            production-ready.
           </p>
         </motion.div>
 

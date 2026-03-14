@@ -53,7 +53,9 @@ const TestimonialsSection = () => {
 
   useEffect(() => {
     timerRef.current = setInterval(next, 5000);
-    return () => { if (timerRef.current) clearInterval(timerRef.current); };
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
   }, [next]);
 
   const resetTimer = () => {
@@ -70,7 +72,12 @@ const TestimonialsSection = () => {
   return (
     <section className="section-padding relative overflow-hidden">
       <ParallaxOrb color="accent" size="xl" speed={-0.2} position={{ top: "30%", left: "-5%" }} />
-      <ParallaxOrb color="primary" size="md" speed={0.3} position={{ bottom: "0%", right: "10%" }} />
+      <ParallaxOrb
+        color="primary"
+        size="md"
+        speed={0.3}
+        position={{ bottom: "0%", right: "10%" }}
+      />
 
       <div className="max-w-4xl mx-auto relative">
         <motion.div
@@ -119,7 +126,10 @@ const TestimonialsSection = () => {
 
         <div className="flex items-center justify-center gap-4 mt-8">
           <button
-            onClick={() => { prev(); resetTimer(); }}
+            onClick={() => {
+              prev();
+              resetTimer();
+            }}
             className="p-2.5 rounded-full glass hover:bg-secondary transition-colors"
             aria-label="Previous"
           >
@@ -136,7 +146,9 @@ const TestimonialsSection = () => {
                   resetTimer();
                 }}
                 className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  i === current ? "bg-primary w-6" : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
+                  i === current
+                    ? "bg-primary w-6"
+                    : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
                 }`}
                 aria-label={`Go to testimonial ${i + 1}`}
               />
@@ -144,7 +156,10 @@ const TestimonialsSection = () => {
           </div>
 
           <button
-            onClick={() => { next(); resetTimer(); }}
+            onClick={() => {
+              next();
+              resetTimer();
+            }}
             className="p-2.5 rounded-full glass hover:bg-secondary transition-colors"
             aria-label="Next"
           >

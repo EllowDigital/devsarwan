@@ -110,7 +110,10 @@ const AnimatedCounter = ({ value, delay = 0 }: { value: number; delay?: number }
 
     const animate = (now: number) => {
       const elapsed = now - startTime;
-      if (elapsed < 0) { requestAnimationFrame(animate); return; }
+      if (elapsed < 0) {
+        requestAnimationFrame(animate);
+        return;
+      }
       const progress = Math.min(elapsed / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
       if (ref.current) ref.current.textContent = Math.floor(eased * end).toLocaleString();
@@ -149,7 +152,8 @@ const GitHubActivitySection = () => {
       const totalStars = repos.reduce((sum, r) => sum + r.stargazers_count, 0);
       const pushEvents = events.filter((e) => e.type === "PushEvent");
       const totalCommitsFromEvents = pushEvents.reduce(
-        (sum, e) => sum + (e.payload?.commits?.length || 0), 0
+        (sum, e) => sum + (e.payload?.commits?.length || 0),
+        0
       );
 
       setStats([
@@ -195,7 +199,9 @@ const GitHubActivitySection = () => {
     }
   }, []);
 
-  useEffect(() => { fetchGitHub(); }, [fetchGitHub]);
+  useEffect(() => {
+    fetchGitHub();
+  }, [fetchGitHub]);
 
   const weeks: number[][] = [];
   for (let i = 0; i < contributions.length; i += 7) {
@@ -360,7 +366,9 @@ const GitHubActivitySection = () => {
                 >
                   <div className="mt-1.5 w-2 h-2 rounded-full bg-primary shrink-0 group-hover:scale-150 transition-transform" />
                   <div className="min-w-0">
-                    <p className="text-xs font-mono text-primary/70 mb-0.5 truncate">{commit.repo}</p>
+                    <p className="text-xs font-mono text-primary/70 mb-0.5 truncate">
+                      {commit.repo}
+                    </p>
                     <p className="text-sm font-medium truncate">{commit.msg}</p>
                     <p className="text-xs text-muted-foreground mt-0.5">{commit.time}</p>
                   </div>

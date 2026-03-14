@@ -5,13 +5,35 @@ import { motion } from "framer-motion";
 import * as THREE from "three";
 
 const TECHS = [
-  "React", "TypeScript", "Node.js", "Python", "TailwindCSS",
-  "PostgreSQL", "MongoDB", "Docker", "Git", "Express",
-  "GraphQL", "Redis", "Firebase", "AWS", "Linux",
-  "Next.js", "FastAPI", "REST API",
+  "React",
+  "TypeScript",
+  "Node.js",
+  "Python",
+  "TailwindCSS",
+  "PostgreSQL",
+  "MongoDB",
+  "Docker",
+  "Git",
+  "Express",
+  "GraphQL",
+  "Redis",
+  "Firebase",
+  "AWS",
+  "Linux",
+  "Next.js",
+  "FastAPI",
+  "REST API",
 ];
 
-function TechNode({ text, position, index }: { text: string; position: [number, number, number]; index: number }) {
+function TechNode({
+  text,
+  position,
+  index,
+}: {
+  text: string;
+  position: [number, number, number];
+  index: number;
+}) {
   const meshRef = useRef<THREE.Mesh>(null);
   const offset = useMemo(() => index * 0.5, [index]);
 
@@ -94,11 +116,7 @@ function Scene() {
       const angle = (indexInRing / countInRing) * Math.PI * 2;
       const radius = 1.5 + ring * 1;
       const y = (Math.random() - 0.5) * 1.2;
-      return [
-        Math.cos(angle) * radius,
-        y,
-        Math.sin(angle) * radius,
-      ] as [number, number, number];
+      return [Math.cos(angle) * radius, y, Math.sin(angle) * radius] as [number, number, number];
     });
   }, []);
 

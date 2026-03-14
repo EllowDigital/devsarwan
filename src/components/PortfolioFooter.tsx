@@ -29,7 +29,11 @@ const PortfolioFooter = () => {
 
         <nav className="flex flex-wrap justify-center gap-4 sm:gap-6">
           {links.map((l) => (
-            <a key={l.href} href={l.href} className="text-xs text-muted-foreground hover:text-foreground transition-colors">
+            <a
+              key={l.href}
+              href={l.href}
+              className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+            >
               {l.label}
             </a>
           ))}
@@ -37,7 +41,12 @@ const PortfolioFooter = () => {
 
         <div className="flex gap-3">
           {socials.map(({ icon: Icon, href, label }) => (
-            <a key={label} href={href} aria-label={label} className="text-muted-foreground hover:text-primary transition-colors">
+            <a
+              key={label}
+              href={href}
+              aria-label={label}
+              className="text-muted-foreground hover:text-primary transition-colors"
+            >
               <Icon size={16} />
             </a>
           ))}

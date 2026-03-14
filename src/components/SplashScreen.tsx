@@ -7,7 +7,10 @@ const SplashScreen = ({ onComplete }: { onComplete: () => void }) => {
   useEffect(() => {
     const t1 = setTimeout(() => setPhase("exit"), 1800);
     const t2 = setTimeout(() => onComplete(), 2400);
-    return () => { clearTimeout(t1); clearTimeout(t2); };
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+    };
   }, [onComplete]);
 
   return (
@@ -43,7 +46,8 @@ const SplashScreen = ({ onComplete }: { onComplete: () => void }) => {
             transition={{ duration: 1.2, delay: 0.4, ease: "easeInOut" }}
             className="h-[2px] mx-auto mt-6 rounded-full"
             style={{
-              background: "linear-gradient(90deg, hsl(var(--gradient-start)), hsl(var(--gradient-end)))",
+              background:
+                "linear-gradient(90deg, hsl(var(--gradient-start)), hsl(var(--gradient-end)))",
             }}
           />
 

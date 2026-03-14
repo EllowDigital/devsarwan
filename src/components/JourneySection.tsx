@@ -12,25 +12,29 @@ const milestones = [
     icon: Code2,
     year: "2022",
     title: "First Lines of Code",
-    description: "Wrote my first HTML page and fell in love with building for the web. The journey began.",
+    description:
+      "Wrote my first HTML page and fell in love with building for the web. The journey began.",
   },
   {
     icon: BookOpen,
     year: "2023",
     title: "Deep Dive into Development",
-    description: "Mastered JavaScript, React, and backend technologies. Built projects that solved real problems.",
+    description:
+      "Mastered JavaScript, React, and backend technologies. Built projects that solved real problems.",
   },
   {
     icon: Rocket,
     year: "2024",
     title: "Going Full Stack",
-    description: "Expanded into databases, APIs, and cloud infrastructure. Became a true full-stack developer.",
+    description:
+      "Expanded into databases, APIs, and cloud infrastructure. Became a true full-stack developer.",
   },
   {
     icon: Building2,
     year: "2024",
     title: "Founded EllowDigital",
-    description: "Launched EllowDigital on June 26, 2024 — turning the passion for building into a mission-driven organization.",
+    description:
+      "Launched EllowDigital on June 26, 2024 — turning the passion for building into a mission-driven organization.",
   },
 ];
 
@@ -96,7 +100,12 @@ const JourneySection = () => {
   return (
     <section id="journey" className="section-padding relative" ref={sectionRef}>
       <ParallaxOrb color="accent" size="lg" speed={-0.35} position={{ top: "0%", left: "0%" }} />
-      <ParallaxOrb color="primary" size="md" speed={0.25} position={{ bottom: "10%", right: "5%" }} />
+      <ParallaxOrb
+        color="primary"
+        size="md"
+        speed={0.25}
+        position={{ bottom: "10%", right: "5%" }}
+      />
 
       <div className="max-w-4xl mx-auto relative">
         <motion.div
@@ -116,7 +125,8 @@ const JourneySection = () => {
             ref={lineRef}
             className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px origin-top md:-translate-x-px"
             style={{
-              background: "linear-gradient(to bottom, hsl(var(--gradient-start)), hsl(var(--gradient-end)))",
+              background:
+                "linear-gradient(to bottom, hsl(var(--gradient-start)), hsl(var(--gradient-end)))",
             }}
           />
 
@@ -130,7 +140,9 @@ const JourneySection = () => {
                   isLeft ? "md:flex-row" : "md:flex-row-reverse"
                 }`}
               >
-                <div className={`journey-card ml-14 sm:ml-16 md:ml-0 md:w-[calc(50%-2.5rem)] glass rounded-2xl p-4 sm:p-6 hover-lift ${isLeft ? "md:text-right" : ""}`}>
+                <div
+                  className={`journey-card ml-14 sm:ml-16 md:ml-0 md:w-[calc(50%-2.5rem)] glass rounded-2xl p-4 sm:p-6 hover-lift ${isLeft ? "md:text-right" : ""}`}
+                >
                   <span className="text-xs font-mono text-primary font-bold">{m.year}</span>
                   <h3 className="text-lg font-bold mt-1 mb-2">{m.title}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">{m.description}</p>

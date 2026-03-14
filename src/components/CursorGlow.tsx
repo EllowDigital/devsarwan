@@ -7,8 +7,10 @@ const CursorGlow = () => {
     const glow = glowRef.current;
     if (!glow) return;
 
-    let x = 0, y = 0;
-    let currentX = 0, currentY = 0;
+    let x = 0,
+      y = 0;
+    let currentX = 0,
+      currentY = 0;
 
     const onMove = (e: MouseEvent) => {
       x = e.clientX;

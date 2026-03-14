@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -86,7 +86,11 @@
 @layer base {
   * {
     @apply border-border;
-    transition: background-color 0.4s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    transition:
+      background-color 0.4s ease,
+      color 0.3s ease,
+      border-color 0.3s ease,
+      box-shadow 0.3s ease;
   }
   body {
     @apply bg-background text-foreground font-sans antialiased;
@@ -122,27 +126,33 @@
     position: relative;
   }
   .gradient-border::before {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
     border-radius: inherit;
     padding: 1px;
     background: linear-gradient(135deg, hsl(var(--gradient-start)), hsl(var(--gradient-end)));
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
     pointer-events: none;
   }
 
   .glow-primary {
-    box-shadow: 0 0 30px -5px hsl(var(--glow-primary) / 0.3),
-                0 0 60px -10px hsl(var(--glow-primary) / 0.15);
+    box-shadow:
+      0 0 30px -5px hsl(var(--glow-primary) / 0.3),
+      0 0 60px -10px hsl(var(--glow-primary) / 0.15);
   }
 
   .glow-accent {
-    box-shadow: 0 0 30px -5px hsl(var(--glow-accent) / 0.3),
-                0 0 60px -10px hsl(var(--glow-accent) / 0.15);
+    box-shadow:
+      0 0 30px -5px hsl(var(--glow-accent) / 0.3),
+      0 0 60px -10px hsl(var(--glow-accent) / 0.15);
   }
 
   .section-padding {
@@ -154,13 +164,14 @@
   }
   .hover-lift:hover {
     transform: translateY(-6px) scale(1.01);
-    box-shadow: 0 25px 50px -15px hsl(var(--glow-primary) / 0.25),
-                0 8px 20px -8px hsl(var(--glow-primary) / 0.1);
+    box-shadow:
+      0 25px 50px -15px hsl(var(--glow-primary) / 0.25),
+      0 8px 20px -8px hsl(var(--glow-primary) / 0.1);
   }
 
   /* Noise texture overlay for premium feel */
   .noise-overlay::after {
-    content: '';
+    content: "";
     position: fixed;
     inset: 0;
     pointer-events: none;
@@ -171,8 +182,9 @@
 
   /* Premium text shadow for headings */
   .text-glow {
-    text-shadow: 0 0 80px hsl(var(--glow-primary) / 0.15),
-                 0 0 40px hsl(var(--glow-primary) / 0.05);
+    text-shadow:
+      0 0 80px hsl(var(--glow-primary) / 0.15),
+      0 0 40px hsl(var(--glow-primary) / 0.05);
   }
 
   /* Cinematic section divider */
@@ -180,7 +192,7 @@
     @apply relative;
   }
   .section-divider::after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: 0;
     left: 50%;
@@ -207,16 +219,30 @@
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
 }
 
 @keyframes glow-pulse {
-  0%, 100% { opacity: 0.4; }
-  50% { opacity: 1; }
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
 }

@@ -19,8 +19,10 @@ const blogPosts: BlogPost[] = [
   {
     id: 1,
     title: "Building Scalable APIs with Node.js & Express",
-    excerpt: "A deep dive into structuring production-ready REST APIs with proper error handling, middleware patterns, and database integration.",
-    content: "When building APIs at scale, architecture matters more than speed of delivery. In this article, I walk through my approach to building Node.js APIs that serve thousands of requests per second — from project structure and middleware chains to database connection pooling and graceful error handling. Key takeaways include using repository patterns, implementing rate limiting, and setting up comprehensive logging with structured output.",
+    excerpt:
+      "A deep dive into structuring production-ready REST APIs with proper error handling, middleware patterns, and database integration.",
+    content:
+      "When building APIs at scale, architecture matters more than speed of delivery. In this article, I walk through my approach to building Node.js APIs that serve thousands of requests per second — from project structure and middleware chains to database connection pooling and graceful error handling. Key takeaways include using repository patterns, implementing rate limiting, and setting up comprehensive logging with structured output.",
     date: "2025-12-15",
     readTime: "8 min",
     tags: ["Node.js", "API", "Backend"],
@@ -30,8 +32,10 @@ const blogPosts: BlogPost[] = [
   {
     id: 2,
     title: "React Performance: Beyond React.memo",
-    excerpt: "Advanced techniques for optimizing React apps — virtualization, code splitting, and state management patterns that actually work.",
-    content: "React.memo is just the beginning. In this piece, I explore advanced performance optimization strategies including windowed rendering with react-window, strategic code splitting at the route and component level, state colocation, and the often-overlooked benefits of using refs for values that don't need to trigger re-renders. I also cover profiling tools and how to read flame charts effectively to identify real bottlenecks.",
+    excerpt:
+      "Advanced techniques for optimizing React apps — virtualization, code splitting, and state management patterns that actually work.",
+    content:
+      "React.memo is just the beginning. In this piece, I explore advanced performance optimization strategies including windowed rendering with react-window, strategic code splitting at the route and component level, state colocation, and the often-overlooked benefits of using refs for values that don't need to trigger re-renders. I also cover profiling tools and how to read flame charts effectively to identify real bottlenecks.",
     date: "2025-11-28",
     readTime: "12 min",
     tags: ["React", "Performance", "Frontend"],
@@ -41,8 +45,10 @@ const blogPosts: BlogPost[] = [
   {
     id: 3,
     title: "Why I Founded EllowDigital",
-    excerpt: "The story behind starting a digital solutions company — from writing my first line of code to building products that matter.",
-    content: "Every founder has a moment where curiosity becomes conviction. For me, it was realizing that the gap between great ideas and great software wasn't talent — it was execution. EllowDigital was born from a simple belief: technology should empower, not complicate. In this article, I share the journey from solo developer to founding a company, the lessons learned, the mistakes made, and the vision that keeps driving us forward.",
+    excerpt:
+      "The story behind starting a digital solutions company — from writing my first line of code to building products that matter.",
+    content:
+      "Every founder has a moment where curiosity becomes conviction. For me, it was realizing that the gap between great ideas and great software wasn't talent — it was execution. EllowDigital was born from a simple belief: technology should empower, not complicate. In this article, I share the journey from solo developer to founding a company, the lessons learned, the mistakes made, and the vision that keeps driving us forward.",
     date: "2025-10-10",
     readTime: "6 min",
     tags: ["Startup", "EllowDigital", "Story"],
@@ -52,8 +58,10 @@ const blogPosts: BlogPost[] = [
   {
     id: 4,
     title: "Database Design Patterns for Modern Apps",
-    excerpt: "From schema design to indexing strategies — how to build databases that scale with your application.",
-    content: "Good database design is invisible when done right and catastrophic when done wrong. This article covers essential patterns I use in every project: proper normalization vs. strategic denormalization, index design for read-heavy vs. write-heavy workloads, connection pooling strategies, and migration workflows that won't break production. I also share my thoughts on when to use SQL vs. NoSQL and the hybrid approaches that work best.",
+    excerpt:
+      "From schema design to indexing strategies — how to build databases that scale with your application.",
+    content:
+      "Good database design is invisible when done right and catastrophic when done wrong. This article covers essential patterns I use in every project: proper normalization vs. strategic denormalization, index design for read-heavy vs. write-heavy workloads, connection pooling strategies, and migration workflows that won't break production. I also share my thoughts on when to use SQL vs. NoSQL and the hybrid approaches that work best.",
     date: "2025-09-22",
     readTime: "10 min",
     tags: ["Database", "SQL", "Architecture"],
@@ -63,8 +71,10 @@ const blogPosts: BlogPost[] = [
   {
     id: 5,
     title: "The Art of Developer Experience",
-    excerpt: "How thoughtful tooling, documentation, and API design create products developers actually want to use.",
-    content: "Developer experience (DX) isn't a nice-to-have — it's a competitive advantage. In this article, I explore what makes great DX: intuitive API design, comprehensive yet concise documentation, meaningful error messages, and developer tooling that gets out of the way. Drawing from my experience building developer-facing products at EllowDigital, I share practical principles for creating tools that developers love.",
+    excerpt:
+      "How thoughtful tooling, documentation, and API design create products developers actually want to use.",
+    content:
+      "Developer experience (DX) isn't a nice-to-have — it's a competitive advantage. In this article, I explore what makes great DX: intuitive API design, comprehensive yet concise documentation, meaningful error messages, and developer tooling that gets out of the way. Drawing from my experience building developer-facing products at EllowDigital, I share practical principles for creating tools that developers love.",
     date: "2025-08-14",
     readTime: "7 min",
     tags: ["DX", "Tooling", "Product"],
@@ -74,8 +84,10 @@ const blogPosts: BlogPost[] = [
   {
     id: 6,
     title: "Deploying with Docker: A Practical Guide",
-    excerpt: "Container orchestration demystified — from Dockerfile best practices to production deployment strategies.",
-    content: "Docker changed how we deploy software, but many developers still treat it as a black box. This guide covers everything from writing efficient multi-stage Dockerfiles to container networking, volume management, and deploying with Docker Compose for development and production. I also cover common pitfalls like image bloat, security considerations, and monitoring containerized applications.",
+    excerpt:
+      "Container orchestration demystified — from Dockerfile best practices to production deployment strategies.",
+    content:
+      "Docker changed how we deploy software, but many developers still treat it as a black box. This guide covers everything from writing efficient multi-stage Dockerfiles to container networking, volume management, and deploying with Docker Compose for development and production. I also cover common pitfalls like image bloat, security considerations, and monitoring containerized applications.",
     date: "2025-07-30",
     readTime: "9 min",
     tags: ["Docker", "DevOps", "Deployment"],
@@ -90,14 +102,18 @@ const BlogSection = () => {
   const [activeCategory, setActiveCategory] = useState<string>("All");
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
 
-  const filtered = activeCategory === "All"
-    ? blogPosts
-    : blogPosts.filter((p) => p.category === activeCategory);
+  const filtered =
+    activeCategory === "All" ? blogPosts : blogPosts.filter((p) => p.category === activeCategory);
 
   return (
     <section id="blog" className="section-padding relative">
       <ParallaxOrb color="accent" size="lg" speed={-0.3} position={{ top: "10%", right: "0%" }} />
-      <ParallaxOrb color="primary" size="md" speed={0.25} position={{ bottom: "10%", left: "5%" }} />
+      <ParallaxOrb
+        color="primary"
+        size="md"
+        speed={0.25}
+        position={{ bottom: "10%", left: "5%" }}
+      />
 
       <div className="max-w-6xl mx-auto relative">
         <motion.div
@@ -159,7 +175,12 @@ const BlogSection = () => {
               <div className="p-5">
                 <div className="flex items-center gap-3 text-xs text-muted-foreground mb-3">
                   <span className="flex items-center gap-1">
-                    <Calendar size={12} /> {new Date(post.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
+                    <Calendar size={12} />{" "}
+                    {new Date(post.date).toLocaleDateString("en-US", {
+                      month: "short",
+                      day: "numeric",
+                      year: "numeric",
+                    })}
                   </span>
                   <span className="flex items-center gap-1">
                     <Clock size={12} /> {post.readTime}
@@ -223,7 +244,12 @@ const BlogSection = () => {
                   {selectedPost.category}
                 </span>
                 <span className="flex items-center gap-1">
-                  <Calendar size={12} /> {new Date(selectedPost.date).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
+                  <Calendar size={12} />{" "}
+                  {new Date(selectedPost.date).toLocaleDateString("en-US", {
+                    month: "long",
+                    day: "numeric",
+                    year: "numeric",
+                  })}
                 </span>
                 <span className="flex items-center gap-1">
                   <Clock size={12} /> {selectedPost.readTime}

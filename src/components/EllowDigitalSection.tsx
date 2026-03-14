@@ -1,7 +1,16 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Zap, Target, Globe, Calendar, ArrowRight, ExternalLink, Rocket, Users } from "lucide-react";
+import {
+  Zap,
+  Target,
+  Globe,
+  Calendar,
+  ArrowRight,
+  ExternalLink,
+  Rocket,
+  Users,
+} from "lucide-react";
 import { motion } from "framer-motion";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -14,9 +23,24 @@ const highlights = [
 ];
 
 const roadmap = [
-  { icon: Rocket, title: "Launch Phase", description: "Building core products and establishing our tech foundation.", status: "complete" },
-  { icon: Users, title: "Growth Phase", description: "Expanding the team and scaling our digital solutions platform.", status: "current" },
-  { icon: Globe, title: "Global Reach", description: "Taking EllowDigital's products to international markets.", status: "upcoming" },
+  {
+    icon: Rocket,
+    title: "Launch Phase",
+    description: "Building core products and establishing our tech foundation.",
+    status: "complete",
+  },
+  {
+    icon: Users,
+    title: "Growth Phase",
+    description: "Expanding the team and scaling our digital solutions platform.",
+    status: "current",
+  },
+  {
+    icon: Globe,
+    title: "Global Reach",
+    description: "Taking EllowDigital's products to international markets.",
+    status: "upcoming",
+  },
 ];
 
 const EllowDigitalSection = () => {
@@ -62,7 +86,11 @@ const EllowDigitalSection = () => {
   }, []);
 
   return (
-    <section id="ellowdigital" className="section-padding relative overflow-hidden" ref={sectionRef}>
+    <section
+      id="ellowdigital"
+      className="section-padding relative overflow-hidden"
+      ref={sectionRef}
+    >
       <div className="absolute inset-0">
         <div className="absolute top-1/3 left-1/3 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[150px]" />
         <div className="absolute bottom-1/3 right-1/3 w-[400px] h-[400px] bg-accent/5 rounded-full blur-[130px]" />
@@ -70,12 +98,15 @@ const EllowDigitalSection = () => {
 
       <div className="max-w-5xl mx-auto relative">
         <div className="ellow-heading text-center mb-16">
-          <p className="text-sm font-mono text-primary tracking-widest uppercase mb-3">Organization</p>
+          <p className="text-sm font-mono text-primary tracking-widest uppercase mb-3">
+            Organization
+          </p>
           <h2 className="text-5xl md:text-6xl lg:text-7xl font-black tracking-tight mb-6">
             <span className="gradient-text">EllowDigital</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Building innovative digital products and technology solutions that shape the future of software development.
+            Building innovative digital products and technology solutions that shape the future of
+            software development.
           </p>
           <div className="flex justify-center mt-6">
             <a
@@ -94,7 +125,11 @@ const EllowDigitalSection = () => {
           {highlights.map((item) => {
             const Icon = item.icon;
             return (
-              <div key={item.label} className="ellow-card glass rounded-2xl p-5 text-center hover-lift" style={{ perspective: "800px" }}>
+              <div
+                key={item.label}
+                className="ellow-card glass rounded-2xl p-5 text-center hover-lift"
+                style={{ perspective: "800px" }}
+              >
                 <Icon size={20} className="text-primary mx-auto mb-3" />
                 <p className="text-xs text-muted-foreground mb-1">{item.label}</p>
                 <p className="font-bold text-sm">{item.value}</p>
@@ -108,10 +143,10 @@ const EllowDigitalSection = () => {
           <div className="ellow-card glass rounded-2xl p-8 hover-lift">
             <h3 className="text-xl font-black mb-4">Our Mission</h3>
             <p className="text-muted-foreground leading-relaxed">
-              At EllowDigital, we believe in the power of technology to transform ideas into reality.
-              Our mission is to create innovative software solutions that empower businesses and individuals
-              to achieve their digital goals. We focus on quality, performance, and user experience in
-              everything we build.
+              At EllowDigital, we believe in the power of technology to transform ideas into
+              reality. Our mission is to create innovative software solutions that empower
+              businesses and individuals to achieve their digital goals. We focus on quality,
+              performance, and user experience in everything we build.
             </p>
           </div>
 
@@ -143,16 +178,27 @@ const EllowDigitalSection = () => {
                     item.status === "current"
                       ? "border-primary/40 bg-primary/5"
                       : item.status === "complete"
-                      ? "border-border bg-secondary/30"
-                      : "border-border/50 bg-secondary/10"
+                        ? "border-border bg-secondary/30"
+                        : "border-border/50 bg-secondary/10"
                   }`}
                 >
                   <div className="flex items-center gap-2 mb-3">
-                    <Icon size={16} className={item.status === "current" ? "text-primary" : "text-muted-foreground"} />
-                    <span className={`text-xs font-mono uppercase tracking-wider ${
-                      item.status === "current" ? "text-primary" : "text-muted-foreground"
-                    }`}>
-                      {item.status === "complete" ? "✓ Done" : item.status === "current" ? "● In Progress" : "○ Upcoming"}
+                    <Icon
+                      size={16}
+                      className={
+                        item.status === "current" ? "text-primary" : "text-muted-foreground"
+                      }
+                    />
+                    <span
+                      className={`text-xs font-mono uppercase tracking-wider ${
+                        item.status === "current" ? "text-primary" : "text-muted-foreground"
+                      }`}
+                    >
+                      {item.status === "complete"
+                        ? "✓ Done"
+                        : item.status === "current"
+                          ? "● In Progress"
+                          : "○ Upcoming"}
                     </span>
                   </div>
                   <h4 className="font-bold mb-1">{item.title}</h4>

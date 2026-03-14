@@ -38,7 +38,8 @@ const CUSTOM_PROJECTS: ProjectItem[] = [
   {
     title: "AI Content Generator",
     description: "An intelligent content generation tool powered by machine learning and NLP.",
-    longDescription: "This AI-powered tool uses natural language processing to generate high-quality content. Supports multiple formats including blog posts, product descriptions, and social media content.",
+    longDescription:
+      "This AI-powered tool uses natural language processing to generate high-quality content. Supports multiple formats including blog posts, product descriptions, and social media content.",
     tech: ["Python", "React", "OpenAI", "FastAPI"],
     category: "AI",
     github: "#",
@@ -50,8 +51,10 @@ const CUSTOM_PROJECTS: ProjectItem[] = [
   },
   {
     title: "DevDash Dashboard",
-    description: "A real-time developer dashboard for monitoring project metrics and team productivity.",
-    longDescription: "DevDash provides real-time insights into development workflows. Track CI/CD pipelines, code quality metrics, and team velocity all in one beautiful interface.",
+    description:
+      "A real-time developer dashboard for monitoring project metrics and team productivity.",
+    longDescription:
+      "DevDash provides real-time insights into development workflows. Track CI/CD pipelines, code quality metrics, and team velocity all in one beautiful interface.",
     tech: ["React", "TypeScript", "D3.js", "Firebase"],
     category: "Frontend",
     github: "#",
@@ -88,7 +91,7 @@ const GRADIENT_POOL = [
 const filters = ["All", "Frontend", "Backend", "Full Stack", "AI", "Tools"] as const;
 
 const ProjectsSection = () => {
-  const [active, setActive] = useState<typeof filters[number]>("All");
+  const [active, setActive] = useState<(typeof filters)[number]>("All");
   const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
   const [projects, setProjects] = useState<ProjectItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -116,13 +119,16 @@ const ProjectsSection = () => {
       const mapped: ProjectItem[] = unique.slice(0, 12).map((repo, i) => {
         const lang = repo.language || "Other";
         let category = LANG_CATEGORY[lang] || "Full Stack";
-        if (repo.topics?.some((t) => t.includes("fullstack") || t.includes("full-stack"))) category = "Full Stack";
+        if (repo.topics?.some((t) => t.includes("fullstack") || t.includes("full-stack")))
+          category = "Full Stack";
         if (repo.topics?.some((t) => t.includes("ai") || t.includes("ml"))) category = "AI";
 
         return {
           title: repo.name.replace(/[-_]/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()),
           description: repo.description || `A ${lang} project by ${repo.owner.login}.`,
-          longDescription: repo.description || `This project is built with ${lang} and maintained by ${repo.owner.login}. Check the GitHub repository for more details.`,
+          longDescription:
+            repo.description ||
+            `This project is built with ${lang} and maintained by ${repo.owner.login}. Check the GitHub repository for more details.`,
           tech: [lang, ...(repo.topics?.slice(0, 3) || [])].filter(Boolean),
           category,
           github: repo.html_url,
@@ -187,7 +193,9 @@ const ProjectsSection = () => {
             Featured <span className="gradient-text">work.</span>
           </h2>
           <p className="text-muted-foreground mt-3 text-sm">
-            Real projects fetched live from GitHub — <span className="text-primary font-medium">devsarwan</span> & <span className="text-primary font-medium">EllowDigital</span>
+            Real projects fetched live from GitHub —{" "}
+            <span className="text-primary font-medium">devsarwan</span> &{" "}
+            <span className="text-primary font-medium">EllowDigital</span>
           </p>
         </motion.div>
 
@@ -211,7 +219,9 @@ const ProjectsSection = () => {
         {loading ? (
           <div className="flex items-center justify-center py-20">
             <Loader2 className="w-8 h-8 animate-spin text-primary" />
-            <span className="ml-3 text-muted-foreground text-sm">Fetching projects from GitHub...</span>
+            <span className="ml-3 text-muted-foreground text-sm">
+              Fetching projects from GitHub...
+            </span>
           </div>
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -221,7 +231,9 @@ const ProjectsSection = () => {
                 className="project-card glass rounded-2xl overflow-hidden hover-lift group cursor-pointer"
                 onClick={() => setSelectedProject(project)}
               >
-                <div className={`h-32 bg-gradient-to-br ${project.color} flex items-center justify-center relative overflow-hidden`}>
+                <div
+                  className={`h-32 bg-gradient-to-br ${project.color} flex items-center justify-center relative overflow-hidden`}
+                >
                   <div className="text-3xl font-black text-foreground/10 select-none">
                     {project.title.split(" ")[0]}
                   </div>
@@ -256,7 +268,10 @@ const ProjectsSection = () => {
 
                   <div className="flex flex-wrap gap-1.5 mb-4">
                     {project.tech.map((t) => (
-                      <span key={t} className="text-xs px-2 py-0.5 rounded-md bg-secondary text-secondary-foreground">
+                      <span
+                        key={t}
+                        className="text-xs px-2 py-0.5 rounded-md bg-secondary text-secondary-foreground"
+                      >
                         {t}
                       </span>
                     ))}
@@ -274,7 +289,9 @@ const ProjectsSection = () => {
         )}
 
         {!loading && filtered.length === 0 && (
-          <p className="text-center text-muted-foreground py-12">No projects in this category yet.</p>
+          <p className="text-center text-muted-foreground py-12">
+            No projects in this category yet.
+          </p>
         )}
       </div>
 
@@ -313,7 +330,10 @@ const ProjectsSection = () => {
 
               <div className="flex flex-wrap gap-2 mb-6">
                 {selectedProject.tech.map((t) => (
-                  <span key={t} className="text-xs px-3 py-1 rounded-full glass gradient-border font-medium">
+                  <span
+                    key={t}
+                    className="text-xs px-3 py-1 rounded-full glass gradient-border font-medium"
+                  >
                     {t}
                   </span>
                 ))}

@@ -164,7 +164,10 @@ const HeroSection = () => {
       ))}
 
       {/* Content with parallax fade */}
-      <motion.div style={{ y: heroY, opacity: heroOpacity }} className="relative z-10 text-center px-6 max-w-5xl">
+      <motion.div
+        style={{ y: heroY, opacity: heroOpacity }}
+        className="relative z-10 text-center px-6 max-w-5xl"
+      >
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -215,7 +218,8 @@ const HeroSection = () => {
             href="#projects"
             className="group inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-primary text-primary-foreground font-semibold text-sm transition-all glow-primary hover:scale-105 active:scale-95"
           >
-            <ExternalLink size={16} className="group-hover:rotate-12 transition-transform" /> View My Work
+            <ExternalLink size={16} className="group-hover:rotate-12 transition-transform" /> View
+            My Work
           </a>
           <a
             href="#contact"
@@ -227,7 +231,8 @@ const HeroSection = () => {
             href="#"
             className="group inline-flex items-center gap-2 px-7 py-3.5 rounded-full glass font-medium text-sm text-muted-foreground hover:text-foreground hover:scale-105 active:scale-95 transition-all"
           >
-            <FileDown size={16} className="group-hover:translate-y-0.5 transition-transform" /> Download Resume
+            <FileDown size={16} className="group-hover:translate-y-0.5 transition-transform" />{" "}
+            Download Resume
           </a>
         </motion.div>
       </motion.div>
@@ -244,7 +249,9 @@ const HeroSection = () => {
           transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
           className="flex flex-col items-center gap-2 text-muted-foreground"
         >
-          <span className="text-[10px] font-mono tracking-[0.2em] uppercase">Scroll to explore</span>
+          <span className="text-[10px] font-mono tracking-[0.2em] uppercase">
+            Scroll to explore
+          </span>
           <ArrowDown size={14} />
         </motion.div>
       </motion.div>

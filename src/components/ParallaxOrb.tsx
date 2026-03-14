@@ -23,33 +23,29 @@ const blurMap = {
   xl: "blur-[120px] sm:blur-[180px]",
 };
 
-const ParallaxOrb = forwardRef<HTMLDivElement, ParallaxOrbProps>(({
-  className = "",
-  speed = -0.3,
-  color = "primary",
-  size = "md",
-  position = {},
-}, _ref) => {
-  const innerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: innerRef,
-    offset: ["start end", "end start"],
-  });
+const ParallaxOrb = forwardRef<HTMLDivElement, ParallaxOrbProps>(
+  ({ className = "", speed = -0.3, color = "primary", size = "md", position = {} }, _ref) => {
+    const innerRef = useRef<HTMLDivElement>(null);
+    const { scrollYProgress } = useScroll({
+      target: innerRef,
+      offset: ["start end", "end start"],
+    });
 
-  const y = useTransform(scrollYProgress, [0, 1], [0, speed * 300]);
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.3, 1, 1, 0.3]);
+    const y = useTransform(scrollYProgress, [0, 1], [0, speed * 300]);
+    const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.3, 1, 1, 0.3]);
 
-  const colorClass = color === "primary" ? "bg-primary/8" : "bg-accent/8";
+    const colorClass = color === "primary" ? "bg-primary/8" : "bg-accent/8";
 
-  return (
-    <div ref={innerRef} className="absolute inset-0 overflow-hidden pointer-events-none">
-      <motion.div
-        style={{ y, opacity, ...position }}
-        className={`absolute rounded-full ${sizeMap[size]} ${blurMap[size]} ${colorClass} ${className}`}
-      />
-    </div>
-  );
-});
+    return (
+      <div ref={innerRef} className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div
+          style={{ y, opacity, ...position }}
+          className={`absolute rounded-full ${sizeMap[size]} ${blurMap[size]} ${colorClass} ${className}`}
+        />
+      </div>
+    );
+  }
+);
 
 ParallaxOrb.displayName = "ParallaxOrb";
 
